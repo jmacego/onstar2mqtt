@@ -116,6 +116,7 @@ docker run \
   --env ONSTAR_VIN= \
   --env ONSTAR_USERNAME= \
   --env ONSTAR_PASSWORD= \
+  --env ONSTAR_TOTP= \
   --env ONSTAR_PIN= \
   --env MQTT_HOST= \
   --env MQTT_USERNAME \
@@ -161,6 +162,7 @@ onstar2mqtt.env:
 ```shell
 ONSTAR_USERNAME=
 ONSTAR_PASSWORD=
+ONSTAR_TOTP=
 ONSTAR_PIN=
 MQTT_USERNAME=
 MQTT_PASSWORD=
