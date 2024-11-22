@@ -18,7 +18,7 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 Collect the following information:
 
 1. [Generate](https://www.uuidgenerator.net/version4) a v4 uuid for the device ID
-1. OnStar login: username, password, PIN
+1. OnStar login: username, password, PIN, OTP Key
 1. Your car's VIN. Easily found in the monthly OnStar diagnostic emails.
 1. MQTT server information: hostname, username, password
     1. If using TLS, define `MQTT_PORT` and `MQTT_TLS=true`
@@ -99,6 +99,7 @@ docker run \
   --env ONSTAR_VIN= \
   --env ONSTAR_USERNAME= \
   --env ONSTAR_PASSWORD= \
+  --env ONSTAR_TOTP= \
   --env ONSTAR_PIN= \
   --env MQTT_HOST= \
   --env MQTT_USERNAME \
