@@ -18,7 +18,7 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 Collect the following information:
 
 1. [Generate](https://www.uuidgenerator.net/version4) a v4 uuid for the device ID
-1. OnStar login: username, password, PIN, OTP Key
+1. OnStar login: username, password, PIN, [TOTP Key (Please click link for instructions)](https://github.com/BigThunderSR/OnStarJS?tab=readme-ov-file#new-requirement-as-of-2024-11-19)
 1. Your car's VIN. Easily found in the monthly OnStar diagnostic emails.
 1. MQTT server information: hostname, username, password
     1. If using TLS, define `MQTT_PORT` and `MQTT_TLS=true`
@@ -101,6 +101,7 @@ docker run \
   --env ONSTAR_PASSWORD= \
   --env ONSTAR_TOTP= \
   --env ONSTAR_PIN= \
+  --env TOKEN_LOCATION \ ## NOTE: This is optional and allows you to save/read tokens from persistent storage
   --env MQTT_HOST= \
   --env MQTT_USERNAME \
   --env MQTT_PASSWORD \
@@ -118,6 +119,7 @@ docker run \
   --env ONSTAR_PASSWORD= \
   --env ONSTAR_TOTP= \
   --env ONSTAR_PIN= \
+  --env TOKEN_LOCATION \ ## NOTE: This is optional and allows you to save/read tokens from persistent storage
   --env MQTT_HOST= \
   --env MQTT_USERNAME \
   --env MQTT_PASSWORD \
@@ -164,6 +166,7 @@ ONSTAR_USERNAME=
 ONSTAR_PASSWORD=
 ONSTAR_TOTP=
 ONSTAR_PIN=
+TOKEN_LOCATION=  # (NOTE: This is optional and allows you to save/read tokens from persistent storage)
 MQTT_USERNAME=
 MQTT_PASSWORD=
 MQTT_ONSTAR_POLLING_STATUS_TOPIC=
