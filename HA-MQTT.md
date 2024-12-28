@@ -23,7 +23,12 @@ mode: single
 
 ### Example Script YAML for Running Commands
 
-**MQTT button auto discovery is enabled starting at v1.14.0 which sends/triggers the defaults of each command. The following isn't strictly necessary, but still available if needed or for sending customized commands.**
+**MQTT button auto discovery is enabled starting at v1.14.0 which sends/triggers the defaults of each command.**
+
+* Buttons are added disabled by default because it's easy to accidentally press the wrong button and trigger an action at an inopportune time. Enable at your own risk and you assume all responsibility for your actions.
+* All available buttons for all vehicles are included for now, so only enable the buttons you need and/or work for your vehicle.
+
+#### The following isn't strictly necessary starting at v1.14.0, but still available if needed or for sending customized commands:
 
 ```yaml
 alias: Car - Start Vehicle
