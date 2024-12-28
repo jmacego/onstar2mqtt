@@ -252,12 +252,13 @@ Commands Implemented in this Program:
 18. `enginerpm`
 
 ### Lovelace Dashboard
+* This is just an example and is meant to show some possible usage modes. It is not all-inclusive and is not intended to be for the purpose of copy-and-use-as-is. Please modify as necessary for your specific needs.
 
 Create a new dashboard, or use the cards in your own view. The `mdi:car-electric` icon works well here.
 
 ![lovelace screenshot](https://github.com/BigThunderSR/onstar2mqtt/raw/main/images/lovelace.png)
 
-#### Dashboard YAML
+#### Example Dashboard YAML
 
 ```yaml
 views:
@@ -361,27 +362,31 @@ views:
           - type: button
             tap_action:
               action: toggle
-            entity: script.car_start_vehicle
+            entity: button.<vehicle_name>_command_start ## If you want to use the auto-created button
+            #entity: script.car_start_vehicle ## If you want to use a script instead of the auto-created button
             name: Start
             show_state: false
           - type: button
             tap_action:
               action: toggle
-            entity: script.car_cancel_start_vehicle
+            entity: button.<vehicle_name>_command_cancelstart ## If you want to use the auto-created button
+            #entity: script.car_cancel_start_vehicle ## If you want to use a script instead of the auto-created button
             name: Cancel Start
             show_state: false
             icon: 'mdi:car-off'
           - type: button
             tap_action:
               action: toggle
-            entity: script.car_lock_doors
+            entity: button.<vehicle_name>_command_lockdoor ## If you want to use the auto-created button
+            #entity: script.car_lock_doors ## If you want to use a script instead of the auto-created button
             name: Lock
             show_state: false
             icon: 'mdi:car-door-lock'
           - type: button
             tap_action:
               action: toggle
-            entity: script.car_unlock_doors
+            entity: button.<vehicle_name>_command_unlockdoor ## If you want to use the auto-created button
+            #entity: script.car_unlock_doors ## If you want to use a script instead of the auto-created button
             name: Unlock
             show_state: false
             icon: 'mdi:car-door'
