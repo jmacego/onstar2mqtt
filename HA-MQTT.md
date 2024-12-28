@@ -28,7 +28,7 @@ mode: single
 * Buttons are added disabled by default because it's easy to accidentally press the wrong button and trigger an action at an inopportune time. Enable at your own risk and you assume all responsibility for your actions.
 * All available buttons for all vehicles are included for now, so only enable the buttons you need and/or work for your vehicle.
 
-#### The following isn't strictly necessary starting at v1.14.0, but still available if needed or for sending customized commands:
+#### The following isn't strictly necessary starting at v1.14.0, but still available if needed or for sending customized commands
 
 ```yaml
 alias: Car - Start Vehicle
@@ -257,6 +257,7 @@ Commands Implemented in this Program:
 18. `enginerpm`
 
 ### Lovelace Dashboard
+
 * This is just an example and is meant to show some possible usage modes. It is not all-inclusive and is not intended to be for the purpose of copy-and-use-as-is. Please modify as necessary for your specific needs.
 
 Create a new dashboard, or use the cards in your own view. The `mdi:car-electric` icon works well here.
