@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "Buildx",
+        "cancelstart",
         "CODACY",
         "daynight",
         "DEVICEID",
@@ -13,6 +14,7 @@
         "kewr",
         "lastpollsuccessful",
         "lcov",
+        "lockdoor",
         "MIDPEAK",
         "MPGE",
         "mqtts",
@@ -20,6 +22,8 @@
         "onstar",
         "onstarjs",
         "PHEV",
+        "TOTP",
+        "unlockdoor",
         "uuidv"
     ]
 }
