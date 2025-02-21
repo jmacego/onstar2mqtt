@@ -232,7 +232,8 @@ mqtt:
 
 Create an automation to update the location whenever the odometer changes, instead of on a time interval.
 
-```alias: Update EV Location
+```yaml
+alias: Update EV Location
 description: ""
 trigger:
   - platform: state
