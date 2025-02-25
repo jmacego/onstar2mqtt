@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this request!
+        Thank you for taking the time to fill out this request for your issue! Please use the discussions tab for general questions or help with the project.
 
   - type: input
     id: title
@@ -23,6 +23,29 @@ body:
       label: Describe the issue
       description: A clear and concise description of what the issue is.
       placeholder: Describe the issue
+    validations:
+      required: true
+
+  - type: select
+    id: type
+    attributes:
+      label: Type
+      description: Was this working before and it has since stopped working, is this a net new issue (never worked before), a bug or a feature request?
+      placeholder: Select an option
+      options:
+        - label: Working before
+          value: working
+        - label: Net new issue
+          value: new
+        - label: Bug
+          value: bug
+        - label: Feature request
+          value: feature
+        - label: Enhancement
+          value: enhancement
+        - label: Other
+          value: other
+
     validations:
       required: true
 
