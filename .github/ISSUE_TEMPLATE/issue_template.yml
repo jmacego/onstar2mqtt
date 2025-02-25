@@ -38,7 +38,6 @@ body:
     attributes:
       label: Type
       description: Was this working before and it has since stopped working, is this a net new issue (never worked before), a bug or a feature request?
-      placeholder: Select an option
       multiple: false
       options:
         - Working before
