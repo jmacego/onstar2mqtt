@@ -106,6 +106,8 @@ body:
       label: Other Environment Details
       description: Any other relevant environment details
       placeholder: Other environment details
+      validations:
+        required: true
         
   - type: textarea
     id: additional
