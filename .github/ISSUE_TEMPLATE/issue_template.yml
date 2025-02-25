@@ -39,6 +39,7 @@ body:
         - Feature request          
         - Enhancement          
         - Other
+      default: 0
     validations:
       required: true
 
