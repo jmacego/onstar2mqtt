@@ -1,0 +1,87 @@
+name: Submit an Issue
+description: Open an issue to report a bug or request a feature.
+title: ''
+assignees: ''
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this request!
+
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: A clear and concise title of what the issue is.
+      placeholder: Issue title
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the issue
+      description: A clear and concise description of what the issue is.
+      placeholder: Describe the issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: To Reproduce
+      description: |
+        Steps to reproduce the behavior (**Note: these are generic steps, please replace with your own steps**):
+
+        1. Start '...'
+        2. Try '...'
+        3. Do '...'
+        4. See error
+      placeholder: Steps to reproduce the behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+      placeholder: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized Log Output
+      description: |
+        If applicable, add sanitized log output (remove any sensitive information) to help explain your problem.
+      placeholder: Sanitized log output
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem.
+      placeholder: Add screenshots
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: |
+        - OS: [e.g. Windows, macOS, Linux]
+        - Node.js version: [e.g. 18.20.0]
+        - npm version: [e.g. 6.14.13]
+        - Other relevant environment details
+      placeholder: Environment details
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+      placeholder: Additional context
