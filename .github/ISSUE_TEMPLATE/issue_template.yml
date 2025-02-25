@@ -31,7 +31,6 @@ body:
     attributes:
       label: Type of Issue
       description: Was this working before and it has since stopped working, is this a net new issue (never worked before), a bug or a feature request?
-      multiple: false
       options:
         - label: Please select an option
         - label: Working before
