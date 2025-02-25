@@ -27,6 +27,13 @@ body:
       required: true
 
   - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+
+  - type: dropdown
     id: type
     attributes:
       label: Type
@@ -34,18 +41,12 @@ body:
       placeholder: Select an option
       multiple: false
       options:
-        - label: Working before
-          value: working
-        - label: Net new issue
-          value: new
-        - label: Bug
-          value: bug
-        - label: Feature request
-          value: feature
-        - label: Enhancement
-          value: enhancement
-        - label: Other
-          value: other
+        - Working before
+        - Net new issue
+        - Bug      
+        - Feature request          
+        - Enhancement          
+        - Other
     validations:
       required: true
 
