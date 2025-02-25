@@ -26,20 +26,20 @@ body:
     validations:
       required: true
 
-  - type: checkboxes
+  - type: dropdown
     id: type
     attributes:
       label: Type
       description: Was this working before and it has since stopped working, is this a net new issue (never worked before), a bug or a feature request?
       multiple: false
       options:
-        - label: Working before
-        - label: Working Before
-        - label: Net New Issue
-        - label: Bug
-        - label: Feature Request
-        - label: Enhancement
-        - label: Other
+        - Working before
+        - Net new issue
+        - Bug      
+        - Feature request          
+        - Enhancement          
+        - Other
+    validations:
       required: true
 
   - type: textarea
