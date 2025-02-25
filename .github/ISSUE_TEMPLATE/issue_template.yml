@@ -1,7 +1,6 @@
 name: Submit an Issue
 description: Open an issue to report a bug or request a feature.
-title: ''
-assignees: ''
+title: '[Please replace with a clear and concise title]'
 
 body:
   - type: markdown
@@ -47,7 +46,7 @@ body:
     attributes:
       label: Expected behavior
       description: A clear and concise description of what you expected to happen.
-      placeholder: Expected behavior
+      placeholder: Expected result
     validations:
       required: true
 
