@@ -1,11 +1,6 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Bug Report
+  - name: Create an Issue
     url: https://github.com/BigThunderSR/onstar2mqtt/issues/new?template=issue_template.yml
-    about: Report a bug or issue with the project.
-  - name: Feature Request
-    url: https://github.com/BigThunderSR/onstar2mqtt/issues/new?template=issue_template.yml
-    about: Suggest a new feature or enhancement.
-  - name: General Issue
-    url: https://github.com/BigThunderSR/onstar2mqtt/issues/new?template=issue_template.yml
-    about: Use this template for creating general issues.
+    about: Use this template for creating issues.
+    
