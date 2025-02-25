@@ -26,25 +26,25 @@ body:
     validations:
       required: true
 
-  - type: select
-    id: type
-    attributes:
-      label: Type
-      description: Was this working before and it has since stopped working, is this a net new issue (never worked before), a bug or a feature request?
-      placeholder: Select an option
-      options:
-        - label: Working before
-          value: working
-        - label: Net new issue
-          value: new
-        - label: Bug
-          value: bug
-        - label: Feature request
-          value: feature
-        - label: Enhancement
-          value: enhancement
-        - label: Other
-          value: other
+  #- type: select
+  #  id: type
+  #  attributes:
+  #    label: Type
+  #    description: Was this working before and it has since stopped working, is this a net new issue (never worked before), a bug or a feature request?
+  #    placeholder: Select an option
+  #    options:
+  #      - label: Working before
+  #        value: working
+  #      - label: Net new issue
+  #        value: new
+  #      - label: Bug
+  #        value: bug
+  #      - label: Feature request
+  #        value: feature
+  #      - label: Enhancement
+  #        value: enhancement
+  #      - label: Other
+  #        value: other
 
     validations:
       required: true
