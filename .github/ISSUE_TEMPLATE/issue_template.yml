@@ -33,14 +33,13 @@ body:
       description: Was this working before and it has since stopped working, is this a net new issue (never worked before), a bug or a feature request?
       multiple: false
       options:
+        - Please select an option
         - Working before
         - Net new issue
         - Bug      
         - Feature request          
         - Enhancement          
         - Other
-        - Please select an option
-      default: Please select an option
     validations:
       required: true
 
