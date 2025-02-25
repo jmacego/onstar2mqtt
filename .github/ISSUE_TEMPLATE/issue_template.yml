@@ -31,16 +31,15 @@ body:
     attributes:
       label: Type
       description: Was this working before and it has since stopped working, is this a net new issue (never worked before), a bug or a feature request?
-      placeholder: Select an option
       multiple: false
       options:
         - label: Working before
-        - label: Net new issue
+        - label: Working Before
+        - label: Net New Issue
         - label: Bug
-        - label: Feature request
+        - label: Feature Request
         - label: Enhancement
         - label: Other
-    validations:
       required: true
 
   - type: textarea
