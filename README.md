@@ -176,7 +176,7 @@ MQTT_ONSTAR_POLLING_STATUS_TOPIC=
 ### Node.js
 
 It's a typical node.js application, define the same environment values as described in the docker sections and run with:
-`npm run start`. Currently, this is only tested with Node.js 18.x.
+`npm run start`. Currently, this is tested with Node.js 18.x, 20.x and 22.x.
 
 ### Home Assistant configuration templates
 
