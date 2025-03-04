@@ -1,6 +1,6 @@
 name: Submit an Issue
 description: Open an issue to report a bug or request a feature.
-title: "[Issue]: <Please replace with a clear and concise title>" 
+title: "[Issue]: <Please replace with a clear and concise title>"
 
 body:
   - type: markdown
@@ -27,9 +27,9 @@ body:
         - Please select an option
         - Working before
         - Net new issue
-        - Bug      
-        - Feature request          
-        - Enhancement          
+        - Bug
+        - Feature request
+        - Enhancement
         - Other
     validations:
       required: true
@@ -108,7 +108,7 @@ body:
       placeholder: Other environment details
     validations:
       required: true
-        
+
   - type: textarea
     id: additional
     attributes:

@@ -13,7 +13,7 @@ on:
   #pull_request:
   #  branches: [ "main" ]
   workflow_run:
-    workflows: ["CodeQL"]    
+    workflows: ["CodeQL"]
     types: [completed]
 
 #concurrency:
@@ -31,9 +31,9 @@ jobs:
           fetch-depth: 0
 
       #- name: Install @babel dependencies
-      #  run: npm install @babel/eslint-plugin@latest @babel/eslint-parser@latest @babel/eslint-plugin@latest @babel/plugin-syntax-class-properties@latest @babel/preset-env@latest @eslint/compat@latest @eslint/eslintrc@latest @eslint/js@latest eslint@latest eslint-plugin-import@latest eslint-plugin-n@latest eslint-plugin-promise@latest --save-dev      
+      #  run: npm install @babel/eslint-plugin@latest @babel/eslint-parser@latest @babel/eslint-plugin@latest @babel/plugin-syntax-class-properties@latest @babel/preset-env@latest @eslint/compat@latest @eslint/eslintrc@latest @eslint/js@latest eslint@latest eslint-plugin-import@latest eslint-plugin-n@latest eslint-plugin-promise@latest --save-dev
       - name: Install Dependencies
-        run: npm install --include=dev      
+        run: npm install --include=dev
       - name: Lint Code Base
         uses: github/super-linter@v7
         #uses: github/super-linter@latest
@@ -42,7 +42,7 @@ jobs:
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           #FILTER_REGEX_EXCLUDE: (onstar.js|onstar.html|vehicle.js)
-          LINTER_RULES_PATH: /          
+          LINTER_RULES_PATH: /
           #JAVASCRIPT_ES_CONFIG_FILE: .eslintrc.yml #Prior to ESLint V9
           #JAVASCRIPT_ES_CONFIG_FILE: eslint.config.cjs
           VALIDATE_JAVASCRIPT_ES: true

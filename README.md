@@ -3,6 +3,7 @@
 [![ci](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/ci.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/codeql-analysis.yml)
 [![release](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/release.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/release.yml)
+
 <!-- [![Notarize Assets with CAS](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/cas_notarize.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/cas_notarize.yml)
 [![Authenticate Assets with CAS](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/cas_authenticate.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/cas_authenticate.yml)
 [![Notarize and Authenticate Docker Image BOM with CAS](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/cas-docker-notarize-authenticate.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/cas-docker-notarize-authenticate.yml) -->
@@ -21,73 +22,81 @@ Collect the following information:
 1. OnStar login: username, password, PIN, [TOTP Key (Please click link for instructions)](https://github.com/BigThunderSR/OnStarJS?tab=readme-ov-file#new-requirement-as-of-2024-11-19)
 1. Your car's VIN. Easily found in the monthly OnStar diagnostic emails.
 1. MQTT server information: hostname, username, password
-    1. If using TLS, define `MQTT_PORT` and `MQTT_TLS=true`
-    1. **NEW! - Provide MQTT topic (MQTT_ONSTAR_POLLING_STATUS_TOPIC) for Onstar Data Polling Status to monitor success/failure when OnStar is polled for data**
-       * MQTT_ONSTAR_POLLING_STATUS_TOPIC/lastpollsuccessful - "true" or "false" depending on status of last poll
-       * MQTT_ONSTAR_POLLING_STATUS_TOPIC/state - Polling Status and Detailed Error Messages in JSON
-       * **NEW! - Automatic creation of pollingStatusTopic starting at v1.11.0**
-         * No longer need to specify MQTT_ONSTAR_POLLING_STATUS_TOPIC as this is now created automatically
-         * Format is "homeassistant/YOUR_CAR_VIN/polling_status/"
-         * If it is explicitly specified, will use the specified value, so does not break backwards compatibility
+   1. If using TLS, define `MQTT_PORT` and `MQTT_TLS=true`
+   1. **NEW! - Provide MQTT topic (MQTT_ONSTAR_POLLING_STATUS_TOPIC) for Onstar Data Polling Status to monitor success/failure when OnStar is polled for data**
+      - MQTT_ONSTAR_POLLING_STATUS_TOPIC/lastpollsuccessful - "true" or "false" depending on status of last poll
+      - MQTT_ONSTAR_POLLING_STATUS_TOPIC/state - Polling Status and Detailed Error Messages in JSON
+      - **NEW! - Automatic creation of pollingStatusTopic starting at v1.11.0**
+        - No longer need to specify MQTT_ONSTAR_POLLING_STATUS_TOPIC as this is now created automatically
+        - Format is "homeassistant/YOUR_CAR_VIN/polling_status/"
+        - If it is explicitly specified, will use the specified value, so does not break backwards compatibility
 
 Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with ONSTAR_REFRESH with values in milliseconds.
 
-* **NEW - Ability to dynamically change polling frequency using MQTT**
-  * Uses the value from "ONSTAR_REFRESH" on initial startup
-  * Change the value dynamically by publishing the new refresh value in milliseconds (ms) as an INT to: "homeassistant/YOUR_CAR_VIN/refresh_interval"
-  * Added new retained topic of "homeassistant/YOUR_CAR_VIN/refresh_interval_current_val" to monitor current refresh value set via MQTT
+- **NEW - Ability to dynamically change polling frequency using MQTT**
 
-* **NEW - Command Response Status is now published to MQTT topics!**
-  * Topic format: MQTT_PREFIX/YOUR_CAR_VIN/command/{commandName}/state
-    * Note: Unless defined, default MQTT_PREFIX=homeassistant
+  - Uses the value from "ONSTAR_REFRESH" on initial startup
+  - Change the value dynamically by publishing the new refresh value in milliseconds (ms) as an INT to: "homeassistant/YOUR_CAR_VIN/refresh_interval"
+  - Added new retained topic of "homeassistant/YOUR_CAR_VIN/refresh_interval_current_val" to monitor current refresh value set via MQTT
 
-* **NEW - Sensor specific messages are now published to MQTT as sensor attributes which are visible in HA**
+- **NEW - Command Response Status is now published to MQTT topics!**
 
-* **NEW - Most non-binary sensors have a state_class assigned to allow collection of long-term statistics in HA**
+  - Topic format: MQTT_PREFIX/YOUR_CAR_VIN/command/{commandName}/state
+    - Note: Unless defined, default MQTT_PREFIX=homeassistant
 
-* **NEW - Manual diagnostic refresh command and manual engine RPM refresh command are working**
+- **NEW - Sensor specific messages are now published to MQTT as sensor attributes which are visible in HA**
 
-* **NEW - OnStar password/pin and MQTT password are masked by default in the console log output. To see these values in the console log output, set "--env LOG_LEVEL=debug"**
+- **NEW - Most non-binary sensors have a state_class assigned to allow collection of long-term statistics in HA**
 
-* **NEW - New env options for securing connectivity for MQTTS using TLS**
-  * MQTT_REJECT_UNAUTHORIZED (Default: "true", set to "false" only for testing.)
-  * MQTT_CA_FILE
-  * MQTT_CERT_FILE
-  * MQTT_KEY_FILE
+- **NEW - Manual diagnostic refresh command and manual engine RPM refresh command are working**
 
-* **NEW - Auto discovery for device_tracker has been enabled starting at v1.12.0**
-  * The device_tracker auto discovery config is published to: "homeassistant/device_tracker/YOUR_CAR_VIN/config" and the GPS coordinates are still read from the original topic automatically at: "homeassistant/device_tracker/YOUR_CAR_VIN/getlocation/state"
-  * Also added GPS based speed and direction to the device_tracker attributes
+- **NEW - OnStar password/pin and MQTT password are masked by default in the console log output. To see these values in the console log output, set "--env LOG_LEVEL=debug"**
 
-* **NEW - Ability to send commands with options using MQTT now works**
-  * Send commands to the command topic in the format:
-    * {"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}
-    * {"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}
-    * {"command": "alert","options": {"action": "Flash"}}
+- **NEW - New env options for securing connectivity for MQTTS using TLS**
 
-* **NEW - MQTT Button Auto-Discovery for HA Added Starting at v1.14.0**
-  * Buttons are added disabled by default because it's easy to accidentally press the wrong button and trigger an action at an inopportune time.
-Enable at your own risk and you assume all responsibility for your actions.
-  * All available buttons for all vehicles are included for now, so only enable the buttons you need and/or work for your vehicle.
+  - MQTT_REJECT_UNAUTHORIZED (Default: "true", set to "false" only for testing.)
+  - MQTT_CA_FILE
+  - MQTT_CERT_FILE
+  - MQTT_KEY_FILE
 
-* **NEW - MQTT Auto-Discovery for Command Status Sensors for HA Added Starting at v1.15.0**
-  * Command Status and Timestamp from last command run are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
+- **NEW - Auto discovery for device_tracker has been enabled starting at v1.12.0**
 
-* **NEW - MQTT Auto-Discovery for Polling Status Sensors for HA Added Starting at v1.16.0**
-  * Polling Status, Timestamp, Error Code (if applicable), Success T/F Sensor from last polling cycle and Polling Refresh Interval Time Sensor are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
+  - The device_tracker auto discovery config is published to: "homeassistant/device_tracker/YOUR_CAR_VIN/config" and the GPS coordinates are still read from the original topic automatically at: "homeassistant/device_tracker/YOUR_CAR_VIN/getlocation/state"
+  - Also added GPS based speed and direction to the device_tracker attributes
 
-* **NEW - MQTT Auto-Discovery for Sensor Status Message Sensors for HA Added Starting at v1.17.0**
-  * At this point, pretty much every available sensor, button and status is published to MQTT auto-discovery topics
-  * Set 'MQTT_LIST_ALL_SENSORS_TOGETHER="true"' to group all the sensors under one MQTT device starting at v1.17.0. Default is "false".  
+- **NEW - Ability to send commands with options using MQTT now works**
+
+  - Send commands to the command topic in the format:
+    - {"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}
+    - {"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}
+    - {"command": "alert","options": {"action": "Flash"}}
+
+- **NEW - MQTT Button Auto-Discovery for HA Added Starting at v1.14.0**
+
+  - Buttons are added disabled by default because it's easy to accidentally press the wrong button and trigger an action at an inopportune time.
+    Enable at your own risk and you assume all responsibility for your actions.
+  - All available buttons for all vehicles are included for now, so only enable the buttons you need and/or work for your vehicle.
+
+- **NEW - MQTT Auto-Discovery for Command Status Sensors for HA Added Starting at v1.15.0**
+
+  - Command Status and Timestamp from last command run are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
+
+- **NEW - MQTT Auto-Discovery for Polling Status Sensors for HA Added Starting at v1.16.0**
+
+  - Polling Status, Timestamp, Error Code (if applicable), Success T/F Sensor from last polling cycle and Polling Refresh Interval Time Sensor are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
+
+- **NEW - MQTT Auto-Discovery for Sensor Status Message Sensors for HA Added Starting at v1.17.0**
+  - At this point, pretty much every available sensor, button and status is published to MQTT auto-discovery topics
+  - Set 'MQTT_LIST_ALL_SENSORS_TOGETHER="true"' to group all the sensors under one MQTT device starting at v1.17.0. Default is "false".
 
 ## Helpful Usage Notes
 
-* The OnStar API has rate limiting, so they will block excessive requests over a short period of time.
-  * Reducing the polling timeout to less than 30 minutes/1800000 ms is likely to get you rate limited (Error 429).
-* The OnStar API can be very temperamental, so you may see numerous errors every now and then where you cannot get any data from your vehicle. These tend to be very sporadic and usually go away on their own.
-  * A common example of this is: "Request Failed with status 504 - Gateway Timeout"
-* After your engine is turned off, the vehicle will respond to about 4 - 5 requests before going into a type of hibernation mode and will not respond to requests or commands until the engine is started up again. If your engine has been off for a while, you may still not be able to get any data from the vehicle or run commands even if it is your first attempt at trying to pull data from your vehicle after the engine was turned off.
-  * **Note:** You will see an error of *"Unable to establish packet session to the vehicle"* when this occurs.
+- The OnStar API has rate limiting, so they will block excessive requests over a short period of time.
+  - Reducing the polling timeout to less than 30 minutes/1800000 ms is likely to get you rate limited (Error 429).
+- The OnStar API can be very temperamental, so you may see numerous errors every now and then where you cannot get any data from your vehicle. These tend to be very sporadic and usually go away on their own.
+  - A common example of this is: "Request Failed with status 504 - Gateway Timeout"
+- After your engine is turned off, the vehicle will respond to about 4 - 5 requests before going into a type of hibernation mode and will not respond to requests or commands until the engine is started up again. If your engine has been off for a while, you may still not be able to get any data from the vehicle or run commands even if it is your first attempt at trying to pull data from your vehicle after the engine was turned off.
+  - **Note:** You will see an error of _"Unable to establish packet session to the vehicle"_ when this occurs.
 
 ### Docker
 
@@ -132,13 +141,13 @@ docker run \
 [Docker Hub](https://hub.docker.com/r/bigthundersr/onstar2mqtt)
 
 ```yaml
-  onstar2mqtt:
-    container_name: onstar2mqtt
-    image: bigthundersr/onstar2mqtt
-    restart: unless-stopped
-    env_file:
-      - /srv/containers/secrets/onstar2mqtt.env
-    environment:
+onstar2mqtt:
+  container_name: onstar2mqtt
+  image: bigthundersr/onstar2mqtt
+  restart: unless-stopped
+  env_file:
+    - /srv/containers/secrets/onstar2mqtt.env
+  environment:
     - ONSTAR_DEVICEID=
     - ONSTAR_VIN=
     - MQTT_HOST=
@@ -147,13 +156,13 @@ docker run \
 [GitHub Container Registry](https://github.com/BigThunderSR/onstar2mqtt/pkgs/container/onstar2mqtt)
 
 ```yaml
-  onstar2mqtt:
-    container_name: onstar2mqtt
-    image: ghcr.io/bigthundersr/onstar2mqtt
-    restart: unless-stopped
-    env_file:
-      - /srv/containers/secrets/onstar2mqtt.env
-    environment:
+onstar2mqtt:
+  container_name: onstar2mqtt
+  image: ghcr.io/bigthundersr/onstar2mqtt
+  restart: unless-stopped
+  env_file:
+    - /srv/containers/secrets/onstar2mqtt.env
+  environment:
     - ONSTAR_DEVICEID=
     - ONSTAR_VIN=
     - MQTT_HOST=
