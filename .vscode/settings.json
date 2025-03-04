@@ -1,4 +1,8 @@
 {
+  "markdownlint.config": {
+    "default": true,
+    "MD033": false
+  },
   "cSpell.words": [
     "Buildx",
     "cancelstart",
