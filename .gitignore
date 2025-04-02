@@ -6,3 +6,4 @@ onstar2mqtt.env
 *.env*
 coverage
 *tokens.json
+.secrets
