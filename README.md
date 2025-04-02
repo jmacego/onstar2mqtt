@@ -23,26 +23,26 @@ Collect the following information:
 1. Your car's VIN. Easily found in the monthly OnStar diagnostic emails.
 1. MQTT server information: hostname, username, password
    1. If using TLS, define `MQTT_PORT` and `MQTT_TLS=true`
-   1. **NEW! - Provide MQTT topic (MQTT_ONSTAR_POLLING_STATUS_TOPIC) for Onstar Data Polling Status to monitor success/failure when OnStar is polled for data**
-      - MQTT_ONSTAR_POLLING_STATUS_TOPIC/lastpollsuccessful - "true" or "false" depending on status of last poll
-      - MQTT_ONSTAR_POLLING_STATUS_TOPIC/state - Polling Status and Detailed Error Messages in JSON
+   1. **NEW! - Provide MQTT topic (`MQTT_ONSTAR_POLLING_STATUS_TOPIC`) for Onstar Data Polling Status to monitor success/failure when OnStar is polled for data**
+      - `MQTT_ONSTAR_POLLING_STATUS_TOPIC/lastpollsuccessful` - `true` or `false` depending on status of last poll
+      - `MQTT_ONSTAR_POLLING_STATUS_TOPIC/state` - Polling Status and Detailed Error Messages in JSON
       - **NEW! - Automatic creation of pollingStatusTopic starting at v1.11.0**
-        - No longer need to specify MQTT_ONSTAR_POLLING_STATUS_TOPIC as this is now created automatically
-        - Format is "homeassistant/YOUR_CAR_VIN/polling_status/"
+        - No longer need to specify `MQTT_ONSTAR_POLLING_STATUS_TOPIC` as this is now created automatically
+        - Format is `homeassistant/YOUR_CAR_VIN/polling_status/`
         - If it is explicitly specified, will use the specified value, so does not break backwards compatibility
 
-Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with ONSTAR_REFRESH with values in milliseconds.
+Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with `ONSTAR_REFRESH` with values in milliseconds.
 
 - **NEW - Ability to dynamically change polling frequency using MQTT**
 
-  - Uses the value from "ONSTAR_REFRESH" on initial startup
-  - Change the value dynamically by publishing the new refresh value in milliseconds (ms) as an INT to: "homeassistant/YOUR_CAR_VIN/refresh_interval"
-  - Added new retained topic of "homeassistant/YOUR_CAR_VIN/refresh_interval_current_val" to monitor current refresh value set via MQTT
+  - Uses the value from `ONSTAR_REFRESH` on initial startup
+  - Change the value dynamically by publishing the new refresh value in milliseconds (ms) as an `INT` to: `homeassistant/YOUR_CAR_VIN/refresh_interval`
+  - Added new retained topic of `homeassistant/YOUR_CAR_VIN/refresh_interval_current_val` to monitor current refresh value set via MQTT
 
 - **NEW - Command Response Status is now published to MQTT topics!**
 
-  - Topic format: MQTT_PREFIX/YOUR_CAR_VIN/command/{commandName}/state
-    - Note: Unless defined, default MQTT_PREFIX=homeassistant
+  - Topic format: `MQTT_PREFIX/YOUR_CAR_VIN/command/{commandName}/state`
+    - Note: Unless defined, default `MQTT_PREFIX=homeassistant`
 
 - **NEW - Sensor specific messages are now published to MQTT as sensor attributes which are visible in HA**
 
@@ -50,26 +50,26 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 
 - **NEW - Manual diagnostic refresh command and manual engine RPM refresh command are working**
 
-- **NEW - OnStar password/pin and MQTT password are masked by default in the console log output. To see these values in the console log output, set "--env LOG_LEVEL=debug"**
+- **NEW - OnStar password/pin and MQTT password are masked by default in the console log output. To see these values in the console log output, set `--env LOG_LEVEL=debug`**
 
 - **NEW - New env options for securing connectivity for MQTTS using TLS**
 
-  - MQTT_REJECT_UNAUTHORIZED (Default: "true", set to "false" only for testing.)
-  - MQTT_CA_FILE
-  - MQTT_CERT_FILE
-  - MQTT_KEY_FILE
+  - `MQTT_REJECT_UNAUTHORIZED` (Default: `true`, set to `false` only for testing.)
+  - `MQTT_CA_FILE`
+  - `MQTT_CERT_FILE`
+  - `MQTT_KEY_FILE`
 
 - **NEW - Auto discovery for device_tracker has been enabled starting at v1.12.0**
 
-  - The device_tracker auto discovery config is published to: "homeassistant/device_tracker/YOUR_CAR_VIN/config" and the GPS coordinates are still read from the original topic automatically at: "homeassistant/device_tracker/YOUR_CAR_VIN/getlocation/state"
+  - The device_tracker auto discovery config is published to: `homeassistant/device_tracker/YOUR_CAR_VIN/config` and the GPS coordinates are still read from the original topic automatically at: `homeassistant/device_tracker/YOUR_CAR_VIN/getlocation/state`
   - Also added GPS based speed and direction to the device_tracker attributes
 
 - **NEW - Ability to send commands with options using MQTT now works**
 
   - Send commands to the command topic in the format:
-    - {"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}
-    - {"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}
-    - {"command": "alert","options": {"action": "Flash"}}
+    - `{"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}`
+    - `{"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}`
+    - `{"command": "alert","options": {"action": "Flash"}}`
 
 - **NEW - MQTT Button Auto-Discovery for HA Added Starting at v1.14.0**
 
@@ -87,7 +87,7 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 
 - **NEW - MQTT Auto-Discovery for Sensor Status Message Sensors for HA Added Starting at v1.17.0**
   - At this point, pretty much every available sensor, button and status is published to MQTT auto-discovery topics
-  - Set 'MQTT_LIST_ALL_SENSORS_TOGETHER="true"' to group all the sensors under one MQTT device starting at v1.17.0. Default is "false".
+  - Set `MQTT_LIST_ALL_SENSORS_TOGETHER="true"` to group all the sensors under one MQTT device starting at v1.17.0. Default is `"false"`.
 
 ## Helpful Usage Notes
 
