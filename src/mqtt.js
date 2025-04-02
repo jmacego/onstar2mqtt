@@ -718,6 +718,12 @@ class MQTT {
                 case 'HIGH_VOLTAGE_BATTERY_PRECONDITIONING_STATUS': // DISABLED/ENABLED
                     value = e.value === 'ENABLED';
                     break;
+                case 'EXHST PART FLTR WARN ON': // FALSE/TRUE
+                    value = e.value === 'TRUE';
+                    break;
+                case 'EXHST PART FLTR WARN2 ON': // FALSE/TRUE
+                    value = e.value === 'TRUE';
+                    break;
                 default:
                     // coerce to number if possible, API uses strings :eyeroll:
                     // eslint-disable-next-line no-case-declarations
