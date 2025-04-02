@@ -22,7 +22,7 @@ Collect the following information:
 1. OnStar login: username, password, PIN, [TOTP Key (Please click link for instructions)](https://github.com/BigThunderSR/OnStarJS?tab=readme-ov-file#new-requirement-as-of-2024-11-19)
 1. Your car's VIN. Easily found in the monthly OnStar diagnostic emails.
 1. MQTT server information: hostname, username, password
-   1. If using TLS, define `MQTT_PORT` and `MQTT_TLS=true`
+   1. If using TLS, define `MQTT_PORT` and `MQTT_TLS="true"`
    1. **NEW! - Provide MQTT topic (`MQTT_ONSTAR_POLLING_STATUS_TOPIC`) for Onstar Data Polling Status to monitor success/failure when OnStar is polled for data**
       - `MQTT_ONSTAR_POLLING_STATUS_TOPIC/lastpollsuccessful` - `true` or `false` depending on status of last poll
       - `MQTT_ONSTAR_POLLING_STATUS_TOPIC/state` - Polling Status and Detailed Error Messages in JSON
@@ -54,7 +54,7 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 
 - **NEW - New env options for securing connectivity for MQTTS using TLS**
 
-  - `MQTT_REJECT_UNAUTHORIZED` (Default: `true`, set to `false` only for testing.)
+  - `MQTT_REJECT_UNAUTHORIZED` (Default: `"true"`, set to `"false"` only for testing.)
   - `MQTT_CA_FILE`
   - `MQTT_CERT_FILE`
   - `MQTT_KEY_FILE`
