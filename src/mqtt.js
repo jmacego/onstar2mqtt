@@ -151,6 +151,11 @@ class MQTT {
             case 'EV PLUG STATE':
             case 'PRIORITY CHARGE INDICATOR':
             case 'PRIORITY CHARGE STATUS':
+            case 'EV_LOC_BASED_CHARGING_HOME_LOC_STORED':
+            case 'SCHEDULED_CABIN_PRECONDTION_CUSTOM_SET_REQ_ACTIVE':
+            case 'VEH_IN_HOME_LOCATION':
+            case 'VEH_NOT_IN_HOME_LOC':
+            case 'VEH_LOCATION_STATUS_INVALID':
             case 'EXHST PART FLTR WARN ON':
             case 'EXHST PART FLTR WARN2 ON':
                 return 'binary_sensor';
@@ -678,6 +683,21 @@ class MQTT {
                 case 'PRIORITY CHARGE STATUS': // NOT_ACTIVE/ACTIVE
                     value = e.value === 'ACTIVE';
                     break;
+                case 'EV_LOC_BASED_CHARGING_HOME_LOC_STORED': // FALSE/TRUE
+                    value = e.value === 'TRUE';
+                    break;
+                case 'SCHEDULED_CABIN_PRECONDTION_CUSTOM_SET_REQ_ACTIVE': // FALSE/TRUE
+                    value = e.value === 'TRUE';
+                    break;
+                case 'VEH_IN_HOME_LOCATION': // FALSE/TRUE
+                    value = e.value === 'TRUE';
+                    break;
+                case 'VEH_NOT_IN_HOME_LOC': // FALSE/TRUE
+                    value = e.value === 'TRUE';
+                    break;
+                case 'VEH_LOCATION_STATUS_INVALID': // FALSE/TRUE
+                    value = e.value === 'TRUE';
+                    break;
                 default:
                     // coerce to number if possible, API uses strings :eyeroll:
                     // eslint-disable-next-line no-case-declarations
@@ -779,6 +799,11 @@ class MQTT {
             // binary_sensor, no state_class and no applicable device_class
             case 'PRIORITY CHARGE INDICATOR': // FALSE/TRUE
             case 'PRIORITY CHARGE STATUS': // NOT_ACTIVE/ACTIVE
+            case 'EV_LOC_BASED_CHARGING_HOME_LOC_STORED': // FALSE/TRUE
+            case 'SCHEDULED_CABIN_PRECONDTION_CUSTOM_SET_REQ_ACTIVE': // FALSE/TRUE
+            case 'VEH_IN_HOME_LOCATION': // FALSE/TRUE
+            case 'VEH_NOT_IN_HOME_LOC': // FALSE/TRUE
+            case 'VEH_LOCATION_STATUS_INVALID': // FALSE/TRUE
             case 'EXHST PART FLTR WARN ON': // FALSE/TRUE - Diesel Exhaust Particulate Filter Warning On
             case 'EXHST PART FLTR WARN2 ON': // FALSE/TRUE - Diesel Exhaust Particulate Filter Warning 2 On
                 return this.mapBinarySensorConfigPayload(diag, diagEl);
