@@ -157,6 +157,10 @@ class MQTT {
             case 'VEH_NOT_IN_HOME_LOC':
             case 'VEH_LOCATION_STATUS_INVALID':
             case 'CABIN_PRECOND_REQUEST':
+            case 'PREF_CHARGING_TIMES_SETTING':
+            case 'LOCATION_BASE_CHARGE_SETTING':
+            case 'CABIN_PRECONDITIONING_REQUEST':
+            case 'HIGH_VOLTAGE_BATTERY_PRECONDITIONING_STATUS':
             case 'EXHST PART FLTR WARN ON':
             case 'EXHST PART FLTR WARN2 ON':
                 return 'binary_sensor';
@@ -702,6 +706,18 @@ class MQTT {
                 case 'CABIN_PRECOND_REQUEST': // OFF/ON
                     value = e.value === 'ON';
                     break;
+                case 'PREF_CHARGING_TIMES_SETTING': // OFF/ON
+                    value = e.value === 'ON';
+                    break;
+                case 'LOCATION_BASE_CHARGE_SETTING': // OFF/ON
+                    value = e.value === 'ON';
+                    break;
+                case 'CABIN_PRECONDITIONING_REQUEST': // NO_ACTION/ACTION
+                    value = e.value === 'ACTION';
+                    break;
+                case 'HIGH_VOLTAGE_BATTERY_PRECONDITIONING_STATUS': // DISABLED/ENABLED
+                    value = e.value === 'ENABLED';
+                    break;
                 default:
                     // coerce to number if possible, API uses strings :eyeroll:
                     // eslint-disable-next-line no-case-declarations
@@ -809,6 +825,10 @@ class MQTT {
             case 'VEH_NOT_IN_HOME_LOC': // FALSE/TRUE
             case 'VEH_LOCATION_STATUS_INVALID': // FALSE/TRUE
             case 'CABIN_PRECOND_REQUEST': // OFF/ON
+            case 'PREF_CHARGING_TIMES_SETTING': // OFF/On
+            case 'LOCATION_BASE_CHARGE_SETTING': // OFF/On
+            case 'CABIN_PRECONDITIONING_REQUEST': // NO_ACTION/ACTION
+            case 'HIGH_VOLTAGE_BATTERY_PRECONDITIONING_STATUS': // DISABLED/ENABLED
             case 'EXHST PART FLTR WARN ON': // FALSE/TRUE - Diesel Exhaust Particulate Filter Warning On
             case 'EXHST PART FLTR WARN2 ON': // FALSE/TRUE - Diesel Exhaust Particulate Filter Warning 2 On
                 return this.mapBinarySensorConfigPayload(diag, diagEl);
