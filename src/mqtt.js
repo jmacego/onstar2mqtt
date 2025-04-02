@@ -834,6 +834,10 @@ class MQTT {
                 return this.mapBinarySensorConfigPayload(diag, diagEl);
             // non-numeric sensor, no state_class or device_class
             case 'CHARGER POWER LEVEL':
+            case 'WEEKEND_END_TIME': // 08:00
+            case 'WEEKEND_START_TIME': // 08:00
+            case 'WEEKDAY_START_TIME': // 08:00
+            case 'WEEKDAY_END_TIME': // 08:00
             case 'EXHST FL LEVL WARN STATUS': // Diesel Exhaust Fluid Level Warning Status
                 return this.mapSensorConfigPayload(diag, diagEl);
             // has state_class, new device class, camel case name
