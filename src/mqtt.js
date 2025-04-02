@@ -844,6 +844,7 @@ class MQTT {
             case 'WEEKEND_START_TIME': // 08:00
             case 'WEEKDAY_START_TIME': // 08:00
             case 'WEEKDAY_END_TIME': // 08:00
+            case 'CHARGE_DAY_OF_WEEK': // Monday
             case 'EXHST FL LEVL WARN STATUS': // Diesel Exhaust Fluid Level Warning Status
                 return this.mapSensorConfigPayload(diag, diagEl);
             // has state_class, new device class, camel case name
