@@ -156,6 +156,7 @@ class MQTT {
             case 'VEH_IN_HOME_LOCATION':
             case 'VEH_NOT_IN_HOME_LOC':
             case 'VEH_LOCATION_STATUS_INVALID':
+            case 'CABIN_PRECOND_REQUEST':
             case 'EXHST PART FLTR WARN ON':
             case 'EXHST PART FLTR WARN2 ON':
                 return 'binary_sensor';
@@ -698,6 +699,9 @@ class MQTT {
                 case 'VEH_LOCATION_STATUS_INVALID': // FALSE/TRUE
                     value = e.value === 'TRUE';
                     break;
+                case 'CABIN_PRECOND_REQUEST': // OFF/ON
+                    value = e.value === 'ON';
+                    break;
                 default:
                     // coerce to number if possible, API uses strings :eyeroll:
                     // eslint-disable-next-line no-case-declarations
@@ -804,6 +808,7 @@ class MQTT {
             case 'VEH_IN_HOME_LOCATION': // FALSE/TRUE
             case 'VEH_NOT_IN_HOME_LOC': // FALSE/TRUE
             case 'VEH_LOCATION_STATUS_INVALID': // FALSE/TRUE
+            case 'CABIN_PRECOND_REQUEST': // OFF/ON
             case 'EXHST PART FLTR WARN ON': // FALSE/TRUE - Diesel Exhaust Particulate Filter Warning On
             case 'EXHST PART FLTR WARN2 ON': // FALSE/TRUE - Diesel Exhaust Particulate Filter Warning 2 On
                 return this.mapBinarySensorConfigPayload(diag, diagEl);
