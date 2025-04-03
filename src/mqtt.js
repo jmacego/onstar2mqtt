@@ -790,6 +790,8 @@ class MQTT {
             // Format: diagnostic, diagnosticElement1, state_class, device_class, attributes
             case 'LIFETIME ENERGY USED':
                 return this.mapSensorConfigPayload(diag, diagEl, 'total_increasing', 'energy');
+            case 'ELECTRIC ECONOMY':
+                return this.mapSensorConfigPayload(diag, diagEl, 'total', 'energy');
             case 'INTERM VOLT BATT VOLT':
             case 'EV PLUG VOLTAGE':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'voltage');
@@ -798,6 +800,8 @@ class MQTT {
             case 'AMBIENT AIR TEMPERATURE F':
             case 'ENGINE COOLANT TEMP':
             case 'ENGINE COOLANT TEMP F':
+            case 'ESTIMATED CABIN TEMPERATURE':
+            case 'ESTIMATED CABIN TEMPERATURE F':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'temperature');
             case 'EV BATTERY LEVEL':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'battery');
@@ -874,8 +878,7 @@ class MQTT {
             // has state_class, no device class
             case 'LAST TRIP ELECTRIC ECON':
             case 'LIFETIME MPGE':
-            case 'LIFETIME EFFICIENCY':
-            case 'ELECTRIC ECONOMY':
+            case 'LIFETIME EFFICIENCY':      // case 'ELECTRIC ECONOMY': // Moved to top       
             case 'EXHST FL LEVL WARN IND': // Diesel Exhaust Fluid Level Warning Indicator
             default:
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement');
