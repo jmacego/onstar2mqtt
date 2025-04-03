@@ -1700,4 +1700,11 @@ describe('MQTT', () => {
             assert.strictEqual(mqtt.addNamePrefix(undefined), 'Prefix undefined');
         });
     });
+
+    describe('MQTT message handling', () => {
+        it('should handle empty state payload', () => {
+            const d = new Diagnostic({});
+            assert.deepStrictEqual(mqtt.getStatePayload(d), {});
+        });
+    });
 });

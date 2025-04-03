@@ -61,5 +61,12 @@ describe('Vehicle', () => {
             assert.strictEqual(v.model, undefined);
             assert.strictEqual(v.vin, undefined);
         });
+
+        it('should handle empty supported commands list', () => {
+            const v = new Vehicle({});
+            const supported = v.getSupported(['test_command']);
+            assert.ok(Array.isArray(supported));
+            assert.strictEqual(supported.length, 0);
+        });
     });
 });
