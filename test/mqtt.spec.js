@@ -1707,4 +1707,124 @@ describe('MQTT', () => {
             assert.deepStrictEqual(mqtt.getStatePayload(d), {});
         });
     });
+
+    describe('mapping functions', () => {
+        let mqtt;
+        let d;
+        let vehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
+
+        beforeEach(() => {
+            mqtt = new MQTT(vehicle);
+            d = new Diagnostic({});
+        });
+
+        it('should map sensor config payload for additional device classes', () => {
+            const diagEl = {
+                name: 'INTERM VOLT BATT VOLT',
+                value: '12.5',
+                unit: 'V'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.device_class, 'voltage');
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should map sensor config payload for charger power level', () => {
+            const diagEl = {
+                name: 'CHARGER POWER LEVEL',
+                value: 'REDUCED',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+        });
+
+        it('should map sensor config payload for WEEKEND_START_TIME', () => {
+            const diagEl = {
+                name: 'WEEKEND_START_TIME',
+                value: '08:00',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+        });
+
+        it('should map sensor config payload for electric related measurements', () => {
+            const diagEl = {
+                name: 'LIFETIME ENERGY USED',
+                value: '500.5',
+                unit: 'kWh'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.device_class, 'energy');
+            assert.strictEqual(result.state_class, 'total_increasing');
+        });
+
+        it('should map sensor config payload for battery temperature', () => {
+            const diagEl = {
+                name: 'HYBRID BATTERY MINIMUM TEMPERATURE',
+                value: '25.5',
+                unit: '°C'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.device_class, 'temperature');
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should map sensor config payload for EV battery level', () => {
+            const diagEl = {
+                name: 'EV BATTERY LEVEL',
+                value: '80',
+                unit: '%'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.device_class, 'battery');
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should handle missing values in mapBaseConfigPayload', () => {
+            const diagEl = {
+                name: 'TEST_SENSOR',
+                value: null,
+                unit: null
+            };
+            const result = mqtt.mapBaseConfigPayload(d, diagEl);
+            assert.ok(result.unique_id.includes('test_sensor'));
+            assert.ok(result.value_template.includes('test_sensor'));
+        });
+
+        it('should handle null state class in mapSensorConfigPayload', () => {
+            const diagEl = {
+                name: 'TEST_SENSOR',
+                value: '123',
+                unit: 'units'
+            };
+            const result = mqtt.mapSensorConfigPayload(d, diagEl, null);
+            assert.strictEqual(result.state_class, null);
+            assert.strictEqual(result.unit_of_measurement, 'units');
+        });
+
+        it('should map sensor config payload for last trip electric economy', () => {
+            const diagEl = {
+                name: 'LAST TRIP ELECTRIC ECON',
+                value: '3.5',
+                unit: 'kWh/100km'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should handle unknown diagnostic element names', () => {
+            const diagEl = {
+                name: 'UNKNOWN_SENSOR',
+                value: '123',
+                unit: 'units'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.state_class, 'measurement');
+            assert.strictEqual(result.device_class, undefined);
+        });
+    });
 });
