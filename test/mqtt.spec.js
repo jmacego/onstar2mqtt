@@ -1827,4 +1827,133 @@ describe('MQTT', () => {
             assert.strictEqual(result.device_class, undefined);
         });
     });
+
+    describe('constructor initialization', () => {
+        it('should initialize with defaults and namePrefix', () => {
+            const testVehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
+            const testPrefix = 'testPrefix';
+            const testNamePrefix = 'testName';
+            const mqtt = new MQTT(testVehicle, testPrefix, testNamePrefix);
+            
+            assert.strictEqual(mqtt.prefix, testPrefix);
+            assert.strictEqual(mqtt.vehicle, testVehicle);
+            assert.strictEqual(mqtt.instance, testVehicle.vin);
+            assert.strictEqual(mqtt.namePrefix, testNamePrefix);
+        });
+    });
+
+    describe('configuration mapping', () => {
+        let mqtt;
+        let vehicle;
+
+        beforeEach(() => {
+            vehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
+            mqtt = new MQTT(vehicle);
+        });
+
+        it('should correctly map weekday start time configurations', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'WEEKDAY_START_TIME',
+                value: '08:00',
+                unit: null
+            };
+
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('weekday_start_time'));
+        });
+
+        it('should correctly map weekday end time configurations', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'WEEKDAY_END_TIME',
+                value: '17:00',
+                unit: null
+            };
+
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('weekday_end_time'));
+        });
+
+        it('should correctly map economy measurements', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'LIFETIME MPGE',
+                value: '95.8',
+                unit: 'MPGe'
+            };
+
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+    });
+
+    describe('base configuration payload', () => {
+        let mqtt;
+        let diagnostic;
+        let vehicle;
+
+        beforeEach(() => {
+            vehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
+            mqtt = new MQTT(vehicle);
+            diagnostic = new Diagnostic({});
+        });
+
+        it('should create base payload with default values', () => {
+            const element = {
+                name: 'TEST_SENSOR',
+                value: '123',
+                unit: 'units'
+            };
+
+            const result = mqtt.mapBaseConfigPayload(diagnostic, element);
+            assert.ok(result.unique_id);
+            assert.ok(result.state_topic);
+            assert.ok(result.value_template);
+            assert.deepStrictEqual(result.device, {
+                identifiers: ['XXX'],
+                manufacturer: 'foo',
+                model: '2020 bar',
+                name: '2020 foo bar',
+                suggested_area: '2020 foo bar Sensors'
+            });
+        });
+
+        it('should handle null diagnostic elements in base payload', () => {
+            const element = {
+                name: undefined,
+                value: null,
+                unit: null
+            };
+
+            const result = mqtt.mapBaseConfigPayload(diagnostic, element);
+            assert.ok(result.unique_id.includes('undefined'));
+            assert.strictEqual(result.value_template, '{{ value_json. }}');
+        });
+    });
+
+    describe('sensor message configuration payload', () => {
+        let mqtt;
+        let vehicle;
+
+        beforeEach(() => {
+            vehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
+            mqtt = new MQTT(vehicle);
+        });
+
+        it('should handle undefined component in sensor message config', () => {
+            const result = mqtt.createSensorMessageConfigPayload('test_sensor', undefined, 'icon');
+            assert.ok(result.topic.includes('test_sensor_message'));
+            assert.ok(result.payload.unique_id.includes('test_sensor_message'));
+        });
+
+        it('should handle missing icon in sensor message config', () => {
+            const result = mqtt.createSensorMessageConfigPayload('test_sensor', 'component', undefined);
+            assert.strictEqual(result.payload.icon, undefined);
+        });
+    });
 });
