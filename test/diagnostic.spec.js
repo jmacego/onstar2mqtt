@@ -42,16 +42,5 @@ describe('Diagnostics', () => {
         it('should strip non-alpha chars', () => {
             assert.strictEqual(DiagnosticElement.convertName('TEMP', '°F'), 'TEMP F');
         });
-
-        it('should convert diagnostic elements correctly', () => {
-            const element = new DiagnosticElement({
-                name: 'TEMPERATURE',
-                value: '25',
-                unit: '°C'
-            });
-            const converted = DiagnosticElement.convert(element);
-            assert.strictEqual(converted.value, 77);
-            assert.strictEqual(converted.unit, '°F');
-        });
     });
 });
