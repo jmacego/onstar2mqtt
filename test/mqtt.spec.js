@@ -1427,7 +1427,7 @@ describe('MQTT', () => {
                 assert.deepStrictEqual(result, expected);
             });
 
-            it('should create sensor message config payload for EV_LOC_BASED_CHARGING_HOME_LOC_STORED', () => {
+            it('should create sensor message config payload for EV LOC BASED CHARGING HOME LOC STORED', () => {
                 const sensor = 'ev_loc_based_charging_home_loc_stored';
                 const component = undefined;
                 const icon = 'mdi:home';
@@ -1457,7 +1457,7 @@ describe('MQTT', () => {
                 assert.deepStrictEqual(result, expected);
             });
 
-            it('should create sensor message config payload for CABIN_PRECONDITIONING_REQUEST', () => {
+            it('should create sensor message config payload for CABIN PRECONDITIONING REQUEST', () => {
                 const sensor = 'cabin_preconditioning_request';
                 const component = undefined;
                 const icon = 'mdi:car';
@@ -1740,9 +1740,9 @@ describe('MQTT', () => {
             assert.strictEqual(result.device_class, undefined);
         });
 
-        it('should map sensor config payload for WEEKEND_START_TIME', () => {
+        it('should map sensor config payload for weekend start time', () => {
             const diagEl = {
-                name: 'WEEKEND_START_TIME',
+                name: 'WEEKEND START TIME',
                 value: '08:00',
                 unit: null
             };
@@ -1854,7 +1854,7 @@ describe('MQTT', () => {
         it('should correctly map weekday start time configurations', () => {
             const diagnostic = new Diagnostic({});
             const element = {
-                name: 'WEEKDAY_START_TIME',
+                name: 'WEEKDAY START TIME',
                 value: '08:00',
                 unit: null
             };
@@ -1868,7 +1868,7 @@ describe('MQTT', () => {
         it('should correctly map weekday end time configurations', () => {
             const diagnostic = new Diagnostic({});
             const element = {
-                name: 'WEEKDAY_END_TIME',
+                name: 'WEEKDAY END TIME',
                 value: '17:00',
                 unit: null
             };
@@ -1905,7 +1905,7 @@ describe('MQTT', () => {
 
         it('should create base payload with default values', () => {
             const element = {
-                name: 'TEST_SENSOR',
+                name: 'TEST SENSOR',
                 value: '123',
                 unit: 'units'
             };
