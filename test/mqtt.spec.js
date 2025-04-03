@@ -655,8 +655,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar',
                         suggested_area: "2020 foo bar Sensors",
+                        name: '2020 foo bar',
                     },
                     state_class: undefined,
                     device_class: undefined,
@@ -1426,6 +1426,97 @@ describe('MQTT', () => {
                 const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
                 assert.deepStrictEqual(result, expected);
             });
+
+            it('should create sensor message config payload for EV_LOC_BASED_CHARGING_HOME_LOC_STORED', () => {
+                const sensor = 'ev_loc_based_charging_home_loc_stored';
+                const component = undefined;
+                const icon = 'mdi:home';
+                const expected = {
+                    topic: 'testPrefix/sensor/testInstance/ev_loc_based_charging_home_loc_stored_message/config',
+                    payload: {
+                        device: {
+                            identifiers: ['XXX'],
+                            manufacturer: 'foo',
+                            model: '2020 bar',
+                            name: '2020 foo bar',
+                            suggested_area: '2020 foo bar',
+                        },
+                        availability: {
+                            topic: mqtt.getAvailabilityTopic(),
+                            payload_available: 'true',
+                            payload_not_available: 'false',
+                        },
+                        unique_id: 'xxx_ev_loc_based_charging_home_loc_stored_message',
+                        name: 'Ev Loc Based Charging Home Loc Stored Message',
+                        state_topic: 'testPrefix/sensor/testInstance/ev_loc_based_charging_home_loc_stored/state',
+                        value_template: '{{ value_json.ev_loc_based_charging_home_loc_stored_message }}',
+                        icon: 'mdi:home',
+                    },
+                };
+                const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
+                assert.deepStrictEqual(result, expected);
+            });
+
+            it('should create sensor message config payload for CABIN_PRECONDITIONING_REQUEST', () => {
+                const sensor = 'cabin_preconditioning_request';
+                const component = undefined;
+                const icon = 'mdi:car';
+                const expected = {
+                    topic: 'testPrefix/sensor/testInstance/cabin_preconditioning_request_message/config',
+                    payload: {
+                        device: {
+                            identifiers: ['XXX'],
+                            manufacturer: 'foo',
+                            model: '2020 bar',
+                            name: '2020 foo bar',
+                            suggested_area: '2020 foo bar',
+                        },
+                        availability: {
+                            topic: mqtt.getAvailabilityTopic(),
+                            payload_available: 'true',
+                            payload_not_available: 'false',
+                        },
+                        unique_id: 'xxx_cabin_preconditioning_request_message',
+                        name: 'Cabin Preconditioning Request Message',
+                        state_topic: 'testPrefix/sensor/testInstance/cabin_preconditioning_request/state',
+                        value_template: '{{ value_json.cabin_preconditioning_request_message }}',
+                        icon: 'mdi:car',
+                    },
+                };
+                const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
+                assert.deepStrictEqual(result, expected);
+            });
+
+            it('should create sensor message config payload for WEEKEND_END_TIME', () => {
+                const sensor = 'weekend_end_time';
+                const component = undefined;
+                const icon = 'mdi:calendar-clock';
+                const expected = {
+                    topic: 'testPrefix/sensor/testInstance/weekend_end_time_message/config',
+                    payload: {
+                        device: {
+                            identifiers: ['XXX'],
+                            manufacturer: 'foo',
+                            model: '2020 bar',
+                            name: '2020 foo bar',
+                            suggested_area: '2020 foo bar',
+                        },
+                        availability: {
+                            topic: mqtt.getAvailabilityTopic(),
+                            payload_available: 'true',
+                            payload_not_available: 'false',
+                        },
+                        unique_id: 'xxx_weekend_end_time_message',
+                        name: 'Weekend End Time Message',
+                        state_topic: 'testPrefix/sensor/testInstance/weekend_end_time/state',
+                        value_template: '{{ value_json.weekend_end_time_message }}',
+                        icon: 'mdi:calendar-clock',
+                    },
+                };
+                const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
+                assert.deepStrictEqual(result, expected);
+            });
+
         });
 
         it('should create sensor message config payload for Right Front tire', () => {
