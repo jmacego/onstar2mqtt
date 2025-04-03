@@ -1609,4 +1609,95 @@ describe('MQTT', () => {
             assert.deepStrictEqual(result, expected);
         });
     });
+
+    describe('additional tests for uncovered lines', () => {
+        it('should handle undefined vehicle in getAvailabilityTopic', () => {
+            mqtt.vehicle = undefined;
+            mqtt.instance = undefined; // Ensure instance is also undefined
+            assert.strictEqual(mqtt.getAvailabilityTopic(), 'homeassistant/undefined/available');
+        });
+
+        it('should handle undefined vehicle in getCommandTopic', () => {
+            mqtt.vehicle = undefined;
+            mqtt.instance = undefined; // Ensure instance is also undefined
+            assert.strictEqual(mqtt.getCommandTopic(), 'homeassistant/undefined/command');
+        });
+
+        it('should handle undefined diagnostic elements in getConfigPayload', () => {
+            const d = new Diagnostic({});
+            const diagnosticElement = { name: undefined }; // Mock diagnostic element
+            const expectedPayload = {
+                availability_topic: 'homeassistant/XXX/available',
+                device: {
+                    identifiers: ['XXX'],
+                    manufacturer: 'foo',
+                    model: '2020 bar',
+                    name: '2020 foo bar',
+                    suggested_area: '2020 foo bar Sensors',
+                },
+                state_class: 'measurement',
+                device_class: undefined,
+                name: '',
+                state_topic: 'homeassistant/sensor/XXX//state',
+                unique_id: 'xxx-undefined',
+                value_template: '{{ value_json. }}',
+                json_attributes_topic: undefined,
+                json_attributes_template: undefined,
+                unit_of_measurement: undefined,
+                payload_available: 'true',
+                payload_not_available: 'false',
+            };
+            assert.deepStrictEqual(mqtt.getConfigPayload(d, diagnosticElement), expectedPayload);
+        });
+
+        it('should handle edge cases in createSensorMessageConfigPayload', () => {
+            const sensor = 'testSensor';
+            const component = undefined;
+            const icon = undefined;
+            const expected = {
+                topic: 'homeassistant/sensor/XXX/testSensor_message/config',
+                payload: {
+                    device: {
+                        identifiers: ['XXX'],
+                        manufacturer: 'foo',
+                        model: '2020 bar',
+                        name: '2020 foo bar',
+                        suggested_area: '2020 foo bar',
+                    },
+                    availability: {
+                        topic: mqtt.getAvailabilityTopic(),
+                        payload_available: 'true',
+                        payload_not_available: 'false',
+                    },
+                    unique_id: 'xxx_testSensor_message',
+                    name: 'TestSensor Message',
+                    state_topic: 'homeassistant/sensor/XXX/testSensor/state',
+                    value_template: '{{ value_json.testSensor_message }}',
+                    icon: undefined,
+                },
+            };
+            const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
+            assert.deepStrictEqual(result, expected);
+        });
+
+        it('should handle invalid sensor type in determineSensorType', () => {
+            assert.strictEqual(MQTT.determineSensorType('INVALID_SENSOR'), 'sensor');
+        });
+
+        it('should handle undefined diagnostic elements in getStatePayload', () => {
+            const d = new Diagnostic({});
+            assert.deepStrictEqual(mqtt.getStatePayload(d), {});
+        });
+
+        it('should handle edge cases in addNamePrefix', () => {
+            mqtt.namePrefix = '';
+            const name = 'TestName';
+            assert.strictEqual(mqtt.addNamePrefix(name), 'TestName');
+        });
+
+        it('should handle undefined name in addNamePrefix', () => {
+            mqtt.namePrefix = 'Prefix';
+            assert.strictEqual(mqtt.addNamePrefix(undefined), 'Prefix undefined');
+        });
+    });
 });

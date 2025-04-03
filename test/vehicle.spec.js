@@ -52,4 +52,14 @@ describe('Vehicle', () => {
         assert.strictEqual(supported.length, 29);
         assert.deepStrictEqual(supported, commandList);
     });
+
+    describe('additional tests for uncovered lines', () => {
+        it('should handle undefined vehicle properties', () => {
+            const v = new Vehicle({});
+            assert.strictEqual(v.year, undefined);
+            assert.strictEqual(v.make, undefined);
+            assert.strictEqual(v.model, undefined);
+            assert.strictEqual(v.vin, undefined);
+        });
+    });
 });
