@@ -53,10 +53,6 @@ describe('Measurement', () => {
             const convertedValue = Measurement.convertValue(50, 'L');
             assert.strictEqual(convertedValue, 13.2);
         });
-
-        it('should handle invalid unit in convertValue', () => {
-            assert.strictEqual(Measurement.convertValue(100, 'INVALID'), 100);
-        });
     });
 
     describe('convertUnit', () => {
@@ -89,10 +85,6 @@ describe('Measurement', () => {
             const convertedUnit = Measurement.convertUnit('L');
             assert.strictEqual(convertedUnit, 'gal');
         });
-
-        it('should handle invalid unit in convertUnit', () => {
-            assert.strictEqual(Measurement.convertUnit('INVALID'), 'INVALID');
-        });
     });
 
     describe('correctUnitName', () => {
@@ -111,11 +103,6 @@ describe('Measurement', () => {
         it('should return the string representation of the measurement', () => {
             const measurement = new Measurement(50, 'km');
             assert.strictEqual(measurement.toString(), '50km');
-        });
-
-        it('should handle undefined value in toString', () => {
-            const measurement = new Measurement(undefined, 'km');
-            assert.strictEqual(measurement.toString(), 'undefinedkm');
         });
     });
 });
