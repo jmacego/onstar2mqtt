@@ -828,7 +828,7 @@ class MQTT {
             case 'PRIORITY CHARGE INDICATOR': // FALSE/TRUE
             case 'PRIORITY CHARGE STATUS': // NOT_ACTIVE/ACTIVE
             case 'LOC BASED CHARGING HOME LOC STORED': // FALSE/TRUE
-            case 'SCHEDULED CABIN PRECONDITION CUSTOM SET REQ ACTIVE': // FALSE/TRUE
+            case 'SCHEDULED CABIN PRECONDTION CUSTOM SET REQ ACTIVE': // FALSE/TRUE - There is a typo in the data coming from the API 'PRECONDTION' is missing an 'i'.
             case 'VEH IN HOME LOCATION': // FALSE/TRUE
             case 'VEH NOT IN HOME LOC': // FALSE/TRUE
             case 'VEH LOCATION STATUS INVALID': // FALSE/TRUE
