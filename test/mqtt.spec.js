@@ -1992,7 +1992,7 @@ describe('MQTT', () => {
             assert.ok(result.value_template.includes('loc_based_charging_home_loc_stored'));
         });
 
-        it('should map scheduled cabin precondition custom set request active correctly', () => {
+        it('should map scheduled cabin precondtion custom set request active correctly', () => {
             const diagnostic = new Diagnostic({});
             const element = {
                 name: 'SCHEDULED CABIN PRECONDTION CUSTOM SET REQ ACTIVE',
