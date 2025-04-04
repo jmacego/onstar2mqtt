@@ -798,6 +798,8 @@ class MQTT {
             case 'AMBIENT AIR TEMPERATURE F':
             case 'ENGINE COOLANT TEMP':
             case 'ENGINE COOLANT TEMP F':
+            case 'SCHEDULED CABIN PRECONDTION CUSTOM SET VALUE':
+            case 'SCHEDULED CABIN PRECONDTION CUSTOM SET VALUE F':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'temperature');
             case 'EV BATTERY LEVEL':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'battery');
