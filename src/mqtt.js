@@ -151,7 +151,7 @@ class MQTT {
             case 'EV PLUG STATE':
             case 'PRIORITY CHARGE INDICATOR':
             case 'PRIORITY CHARGE STATUS':
-            case 'EV LOC BASED CHARGING HOME LOC STORED':
+            case 'LOC BASED CHARGING HOME LOC STORED':
             case 'SCHEDULED CABIN PRECONDTION CUSTOM SET REQ ACTIVE':
             case 'VEH IN HOME LOCATION':
             case 'VEH NOT IN HOME LOC':
@@ -688,7 +688,7 @@ class MQTT {
                 case 'PRIORITY CHARGE STATUS': // NOT_ACTIVE/ACTIVE
                     value = e.value === 'ACTIVE';
                     break;
-                case 'EV LOC BASED CHARGING HOME LOC STORED': // FALSE/TRUE
+                case 'LOC BASED CHARGING HOME LOC STORED': // FALSE/TRUE
                     value = e.value === 'TRUE';
                     break;
                 case 'SCHEDULED CABIN PRECONDTION CUSTOM SET REQ ACTIVE': // FALSE/TRUE
@@ -825,9 +825,9 @@ class MQTT {
             // binary_sensor, no state_class and no applicable device_class
             case 'PRIORITY CHARGE INDICATOR': // FALSE/TRUE
             case 'PRIORITY CHARGE STATUS': // NOT_ACTIVE/ACTIVE
-            case 'EV LOC BASED CHARGING HOME LOC STORED': // FALSE/TRUE
+            case 'LOC BASED CHARGING HOME LOC STORED': // FALSE/TRUE
             case 'SCHEDULED CABIN PRECONDITION CUSTOM SET REQ ACTIVE': // FALSE/TRUE
-            case 'VEH IN HOME_LOCATION': // FALSE/TRUE
+            case 'VEH IN HOME LOCATION': // FALSE/TRUE
             case 'VEH NOT IN HOME LOC': // FALSE/TRUE
             case 'VEH LOCATION STATUS INVALID': // FALSE/TRUE
             case 'CABIN PRECOND REQUEST': // OFF/ON

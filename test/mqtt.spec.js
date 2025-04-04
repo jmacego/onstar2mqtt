@@ -1979,17 +1979,17 @@ describe('MQTT', () => {
             assert.ok(result.value_template.includes('priority_charge_status'));
         });
 
-        it('should map EV location based charging home location stored correctly', () => {
+        it('should map location based charging home location stored correctly', () => {
             const diagnostic = new Diagnostic({});
             const element = {
-                name: 'EV LOC BASED CHARGING HOME LOC STORED',
+                name: 'LOC BASED CHARGING HOME LOC STORED',
                 value: 'TRUE',
                 unit: null
             };
             const result = mqtt.getConfigMapping(diagnostic, element);
             assert.strictEqual(result.state_class, undefined);
             assert.strictEqual(result.device_class, undefined);
-            assert.ok(result.value_template.includes('ev_loc_based_charging_home_loc_stored'));
+            assert.ok(result.value_template.includes('loc_based_charging_home_loc_stored'));
         });
 
         it('should map scheduled cabin precondition custom set request active correctly', () => {
@@ -2010,7 +2010,7 @@ describe('MQTT', () => {
         it('should map vehicle in home location correctly', () => {
             const diagnostic = new Diagnostic({});
             const element = {
-                name: 'VEH IN HOME_LOCATION',
+                name: 'VEH IN HOME LOCATION',
                 value: 'TRUE',
                 unit: null
             };
