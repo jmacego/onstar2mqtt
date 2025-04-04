@@ -95,6 +95,18 @@ describe('Measurement', () => {
         });
     });
 
+    describe('correctUnitName', () => {
+        it('should handle volts variations correctly', () => {
+            assert.strictEqual(Measurement.correctUnitName('volts'), 'V');
+            assert.strictEqual(Measurement.correctUnitName('Volts'), 'V');
+        });
+        
+        it('should handle liter variations correctly', () => {
+            assert.strictEqual(Measurement.correctUnitName('l'), 'L');
+            assert.strictEqual(Measurement.correctUnitName('L'), 'L');
+        });
+    });
+
     describe('toString', () => {
         it('should return the string representation of the measurement', () => {
             const measurement = new Measurement(50, 'km');

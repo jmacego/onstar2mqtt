@@ -1706,6 +1706,26 @@ describe('MQTT', () => {
             const d = new Diagnostic({});
             assert.deepStrictEqual(mqtt.getStatePayload(d), {});
         });
+
+        it('should handle invalid MQTT topic conversion', () => {
+            assert.strictEqual(MQTT.convertName(''), '');
+            assert.strictEqual(MQTT.convertName(null), '');
+            assert.strictEqual(MQTT.convertName(undefined), '');
+        });
+
+        it('should handle getStatePayload edge cases', () => {
+            const diagnostic = new Diagnostic({
+                name: 'TEST',
+                diagnosticElements: [
+                    {name: 'UNKNOWN_BOOL', value: 'INVALID', unit: null},
+                    {name: 'UNKNOWN_NUM', value: 'NOT_A_NUMBER', unit: 'units'}
+                ]
+            });
+            const result = mqtt.getStatePayload(diagnostic);
+            assert.strictEqual(result.unknown_bool_message, undefined);
+            // Update this line to expect undefined since unknown values are not handled
+            assert.strictEqual(result.unknown_bool, undefined);
+        });
     });
 
     describe('mapping functions', () => {
@@ -2089,6 +2109,30 @@ describe('MQTT', () => {
             assert.strictEqual(result.state_class, undefined);
             assert.strictEqual(result.device_class, undefined);
             assert.ok(result.value_template.includes('high_voltage_battery_preconditioning_status'));
+        });
+
+        it('should map binary sensor config for edge cases', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'EXHST PART FLTR WARN ON',
+                value: 'TRUE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+        });
+
+        it('should map EXHST PART FLTR WARN2 ON correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'EXHST PART FLTR WARN2 ON',
+                value: 'TRUE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
         });
     });
 

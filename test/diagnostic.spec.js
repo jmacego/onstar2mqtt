@@ -21,6 +21,20 @@ describe('Diagnostics', () => {
             assert.strictEqual(lines.length, 3);
             assert.strictEqual(lines[0], 'AMBIENT AIR TEMPERATURE:');
         });
+
+        it('should handle diagnostic response with no valid elements', () => {
+            const diagResponse = {
+                name: 'TEST',
+                diagnosticElement: [
+                    { value: 123 }, // Missing unit
+                    { unit: 'test' }, // Missing value
+                    {} // Missing both
+                ]
+            };
+            const diagnostic = new Diagnostic(diagResponse);
+            assert.strictEqual(diagnostic.diagnosticElements.length, 0);
+            assert.strictEqual(diagnostic.hasElements(), false);
+        });
     });
 
     describe('DiagnosticElement', () => {
