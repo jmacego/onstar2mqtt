@@ -1426,6 +1426,97 @@ describe('MQTT', () => {
                 const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
                 assert.deepStrictEqual(result, expected);
             });
+
+            it('should create sensor message config payload for EV LOC BASED CHARGING HOME LOC STORED', () => {
+                const sensor = 'ev_loc_based_charging_home_loc_stored';
+                const component = undefined;
+                const icon = 'mdi:home';
+                const expected = {
+                    topic: 'testPrefix/sensor/testInstance/ev_loc_based_charging_home_loc_stored_message/config',
+                    payload: {
+                        device: {
+                            identifiers: ['XXX'],
+                            manufacturer: 'foo',
+                            model: '2020 bar',
+                            name: '2020 foo bar',
+                            suggested_area: '2020 foo bar',
+                        },
+                        availability: {
+                            topic: mqtt.getAvailabilityTopic(),
+                            payload_available: 'true',
+                            payload_not_available: 'false',
+                        },
+                        unique_id: 'xxx_ev_loc_based_charging_home_loc_stored_message',
+                        name: 'Ev Loc Based Charging Home Loc Stored Message',
+                        state_topic: 'testPrefix/sensor/testInstance/ev_loc_based_charging_home_loc_stored/state',
+                        value_template: '{{ value_json.ev_loc_based_charging_home_loc_stored_message }}',
+                        icon: 'mdi:home',
+                    },
+                };
+                const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
+                assert.deepStrictEqual(result, expected);
+            });
+
+            it('should create sensor message config payload for CABIN PRECONDITIONING REQUEST', () => {
+                const sensor = 'cabin_preconditioning_request';
+                const component = undefined;
+                const icon = 'mdi:car';
+                const expected = {
+                    topic: 'testPrefix/sensor/testInstance/cabin_preconditioning_request_message/config',
+                    payload: {
+                        device: {
+                            identifiers: ['XXX'],
+                            manufacturer: 'foo',
+                            model: '2020 bar',
+                            name: '2020 foo bar',
+                            suggested_area: '2020 foo bar',
+                        },
+                        availability: {
+                            topic: mqtt.getAvailabilityTopic(),
+                            payload_available: 'true',
+                            payload_not_available: 'false',
+                        },
+                        unique_id: 'xxx_cabin_preconditioning_request_message',
+                        name: 'Cabin Preconditioning Request Message',
+                        state_topic: 'testPrefix/sensor/testInstance/cabin_preconditioning_request/state',
+                        value_template: '{{ value_json.cabin_preconditioning_request_message }}',
+                        icon: 'mdi:car',
+                    },
+                };
+                const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
+                assert.deepStrictEqual(result, expected);
+            });
+
+            it('should create sensor message config payload for WEEKEND_END_TIME', () => {
+                const sensor = 'weekend_end_time';
+                const component = undefined;
+                const icon = 'mdi:calendar-clock';
+                const expected = {
+                    topic: 'testPrefix/sensor/testInstance/weekend_end_time_message/config',
+                    payload: {
+                        device: {
+                            identifiers: ['XXX'],
+                            manufacturer: 'foo',
+                            model: '2020 bar',
+                            name: '2020 foo bar',
+                            suggested_area: '2020 foo bar',
+                        },
+                        availability: {
+                            topic: mqtt.getAvailabilityTopic(),
+                            payload_available: 'true',
+                            payload_not_available: 'false',
+                        },
+                        unique_id: 'xxx_weekend_end_time_message',
+                        name: 'Weekend End Time Message',
+                        state_topic: 'testPrefix/sensor/testInstance/weekend_end_time/state',
+                        value_template: '{{ value_json.weekend_end_time_message }}',
+                        icon: 'mdi:calendar-clock',
+                    },
+                };
+                const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
+                assert.deepStrictEqual(result, expected);
+            });
+
         });
 
         it('should create sensor message config payload for Right Front tire', () => {
@@ -1516,6 +1607,597 @@ describe('MQTT', () => {
             };
             const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
             assert.deepStrictEqual(result, expected);
+        });
+    });
+
+    describe('additional tests for uncovered lines', () => {
+        it('should handle undefined vehicle in getAvailabilityTopic', () => {
+            mqtt.vehicle = undefined;
+            mqtt.instance = undefined; // Ensure instance is also undefined
+            assert.strictEqual(mqtt.getAvailabilityTopic(), 'homeassistant/undefined/available');
+        });
+
+        it('should handle undefined vehicle in getCommandTopic', () => {
+            mqtt.vehicle = undefined;
+            mqtt.instance = undefined; // Ensure instance is also undefined
+            assert.strictEqual(mqtt.getCommandTopic(), 'homeassistant/undefined/command');
+        });
+
+        it('should handle undefined diagnostic elements in getConfigPayload', () => {
+            const d = new Diagnostic({});
+            const diagnosticElement = { name: undefined }; // Mock diagnostic element
+            const expectedPayload = {
+                availability_topic: 'homeassistant/XXX/available',
+                device: {
+                    identifiers: ['XXX'],
+                    manufacturer: 'foo',
+                    model: '2020 bar',
+                    name: '2020 foo bar',
+                    suggested_area: '2020 foo bar Sensors',
+                },
+                state_class: 'measurement',
+                device_class: undefined,
+                name: '',
+                state_topic: 'homeassistant/sensor/XXX//state',
+                unique_id: 'xxx-undefined',
+                value_template: '{{ value_json. }}',
+                json_attributes_topic: undefined,
+                json_attributes_template: undefined,
+                unit_of_measurement: undefined,
+                payload_available: 'true',
+                payload_not_available: 'false',
+            };
+            assert.deepStrictEqual(mqtt.getConfigPayload(d, diagnosticElement), expectedPayload);
+        });
+
+        it('should handle edge cases in createSensorMessageConfigPayload', () => {
+            const sensor = 'testSensor';
+            const component = undefined;
+            const icon = undefined;
+            const expected = {
+                topic: 'homeassistant/sensor/XXX/testSensor_message/config',
+                payload: {
+                    device: {
+                        identifiers: ['XXX'],
+                        manufacturer: 'foo',
+                        model: '2020 bar',
+                        name: '2020 foo bar',
+                        suggested_area: '2020 foo bar',
+                    },
+                    availability: {
+                        topic: mqtt.getAvailabilityTopic(),
+                        payload_available: 'true',
+                        payload_not_available: 'false',
+                    },
+                    unique_id: 'xxx_testSensor_message',
+                    name: 'TestSensor Message',
+                    state_topic: 'homeassistant/sensor/XXX/testSensor/state',
+                    value_template: '{{ value_json.testSensor_message }}',
+                    icon: undefined,
+                },
+            };
+            const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
+            assert.deepStrictEqual(result, expected);
+        });
+
+        it('should handle invalid sensor type in determineSensorType', () => {
+            assert.strictEqual(MQTT.determineSensorType('INVALID_SENSOR'), 'sensor');
+        });
+
+        it('should handle undefined diagnostic elements in getStatePayload', () => {
+            const d = new Diagnostic({});
+            assert.deepStrictEqual(mqtt.getStatePayload(d), {});
+        });
+
+        it('should handle edge cases in addNamePrefix', () => {
+            mqtt.namePrefix = '';
+            const name = 'TestName';
+            assert.strictEqual(mqtt.addNamePrefix(name), 'TestName');
+        });
+
+        it('should handle undefined name in addNamePrefix', () => {
+            mqtt.namePrefix = 'Prefix';
+            assert.strictEqual(mqtt.addNamePrefix(undefined), 'Prefix undefined');
+        });
+    });
+
+    describe('MQTT message handling', () => {
+        it('should handle empty state payload', () => {
+            const d = new Diagnostic({});
+            assert.deepStrictEqual(mqtt.getStatePayload(d), {});
+        });
+
+        it('should handle invalid MQTT topic conversion', () => {
+            assert.strictEqual(MQTT.convertName(''), '');
+            assert.strictEqual(MQTT.convertName(null), '');
+            assert.strictEqual(MQTT.convertName(undefined), '');
+        });
+
+        it('should handle getStatePayload edge cases', () => {
+            const diagnostic = new Diagnostic({
+                name: 'TEST',
+                diagnosticElements: [
+                    {name: 'UNKNOWN_BOOL', value: 'INVALID', unit: null},
+                    {name: 'UNKNOWN_NUM', value: 'NOT_A_NUMBER', unit: 'units'}
+                ]
+            });
+            const result = mqtt.getStatePayload(diagnostic);
+            assert.strictEqual(result.unknown_bool_message, undefined);
+            // Update this line to expect undefined since unknown values are not handled
+            assert.strictEqual(result.unknown_bool, undefined);
+        });
+    });
+
+    describe('mapping functions', () => {
+        let mqtt;
+        let d;
+        let vehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
+
+        beforeEach(() => {
+            mqtt = new MQTT(vehicle);
+            d = new Diagnostic({});
+        });
+
+        it('should map sensor config payload for additional device classes', () => {
+            const diagEl = {
+                name: 'INTERM VOLT BATT VOLT',
+                value: '12.5',
+                unit: 'V'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.device_class, 'voltage');
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should map sensor config payload for charger power level', () => {
+            const diagEl = {
+                name: 'CHARGER POWER LEVEL',
+                value: 'REDUCED',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+        });
+
+        it('should map sensor config payload for weekend start time', () => {
+            const diagEl = {
+                name: 'WEEKEND START TIME',
+                value: '08:00',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+        });
+
+        it('should map sensor config payload for electric related measurements', () => {
+            const diagEl = {
+                name: 'LIFETIME ENERGY USED',
+                value: '500.5',
+                unit: 'kWh'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.device_class, 'energy');
+            assert.strictEqual(result.state_class, 'total_increasing');
+        });
+
+        it('should map sensor config payload for battery temperature', () => {
+            const diagEl = {
+                name: 'HYBRID BATTERY MINIMUM TEMPERATURE',
+                value: '25.5',
+                unit: '°C'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.device_class, 'temperature');
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should map sensor config payload for EV battery level', () => {
+            const diagEl = {
+                name: 'EV BATTERY LEVEL',
+                value: '80',
+                unit: '%'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.device_class, 'battery');
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should handle missing values in mapBaseConfigPayload', () => {
+            const diagEl = {
+                name: 'TEST_SENSOR',
+                value: null,
+                unit: null
+            };
+            const result = mqtt.mapBaseConfigPayload(d, diagEl);
+            assert.ok(result.unique_id.includes('test_sensor'));
+            assert.ok(result.value_template.includes('test_sensor'));
+        });
+
+        it('should handle null state class in mapSensorConfigPayload', () => {
+            const diagEl = {
+                name: 'TEST_SENSOR',
+                value: '123',
+                unit: 'units'
+            };
+            const result = mqtt.mapSensorConfigPayload(d, diagEl, null);
+            assert.strictEqual(result.state_class, null);
+            assert.strictEqual(result.unit_of_measurement, 'units');
+        });
+
+        it('should map sensor config payload for last trip electric economy', () => {
+            const diagEl = {
+                name: 'LAST TRIP ELECTRIC ECON',
+                value: '3.5',
+                unit: 'kWh/100km'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should handle unknown diagnostic element names', () => {
+            const diagEl = {
+                name: 'UNKNOWN_SENSOR',
+                value: '123',
+                unit: 'units'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.state_class, 'measurement');
+            assert.strictEqual(result.device_class, undefined);
+        });
+    });
+
+    describe('constructor initialization', () => {
+        it('should initialize with defaults and namePrefix', () => {
+            const testVehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
+            const testPrefix = 'testPrefix';
+            const testNamePrefix = 'testName';
+            const mqtt = new MQTT(testVehicle, testPrefix, testNamePrefix);
+            
+            assert.strictEqual(mqtt.prefix, testPrefix);
+            assert.strictEqual(mqtt.vehicle, testVehicle);
+            assert.strictEqual(mqtt.instance, testVehicle.vin);
+            assert.strictEqual(mqtt.namePrefix, testNamePrefix);
+        });
+    });
+
+    describe('configuration mapping', () => {
+        let mqtt;
+        let vehicle;
+
+        beforeEach(() => {
+            vehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
+            mqtt = new MQTT(vehicle);
+        });
+
+        it('should correctly map weekday start time configurations', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'WEEKDAY START TIME',
+                value: '08:00',
+                unit: null
+            };
+
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('weekday_start_time'));
+        });
+
+        it('should correctly map weekday end time configurations', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'WEEKDAY END TIME',
+                value: '17:00',
+                unit: null
+            };
+
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('weekday_end_time'));
+        });
+
+        it('should correctly map economy measurements', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'LIFETIME MPGE',
+                value: '95.8',
+                unit: 'MPGe'
+            };
+
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should map weekend end time correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'WEEKEND END TIME',
+                value: '08:00',
+                unit: null
+            };
+
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('weekend_end_time'));
+        });
+
+        it('should map weekend start time correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'WEEKEND START TIME',
+                value: '08:00',
+                unit: null
+            };
+
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('weekend_start_time'));
+        });
+
+        it('should map charge day of week correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'CHARGE DAY OF WEEK',
+                value: 'Monday',
+                unit: null
+            };
+
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('charge_day_of_week'));
+        });
+
+        it('should map priority charge indicator correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'PRIORITY CHARGE INDICATOR',
+                value: 'TRUE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('priority_charge_indicator'));
+        });
+
+        it('should map priority charge status correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'PRIORITY CHARGE STATUS',
+                value: 'ACTIVE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('priority_charge_status'));
+        });
+
+        it('should map EV location based charging home location stored correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'EV LOC BASED CHARGING HOME LOC STORED',
+                value: 'TRUE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('ev_loc_based_charging_home_loc_stored'));
+        });
+
+        it('should map scheduled cabin precondition custom set request active correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'SCHEDULED CABIN PRECONDTION CUSTOM SET REQ ACTIVE',
+                value: 'TRUE',
+                unit: null
+            };
+            const result = mqtt.mapBinarySensorConfigPayload(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('scheduled_cabin_precondtion_custom_set_req_active'));
+            assert.strictEqual(result.payload_on, true);
+            assert.strictEqual(result.payload_off, false);
+        });
+
+        it('should map vehicle in home location correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'VEH IN HOME_LOCATION',
+                value: 'TRUE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('veh_in_home_location'));
+        });
+
+        it('should map vehicle not in home location correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'VEH NOT IN HOME LOC',
+                value: 'TRUE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('veh_not_in_home_loc'));
+        });
+
+        it('should map vehicle location status invalid correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'VEH LOCATION STATUS INVALID',
+                value: 'TRUE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('veh_location_status_invalid'));
+        });
+
+        it('should map cabin precond request correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'CABIN PRECOND REQUEST',
+                value: 'ON',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('cabin_precond_request'));
+        });
+
+        it('should map preferred charging times setting correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'PREF CHARGING TIMES SETTING',
+                value: 'ON',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('pref_charging_times_setting'));
+        });
+
+        it('should map location base charge setting correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'LOCATION BASE CHARGE SETTING',
+                value: 'ON',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('location_base_charge_setting'));
+        });
+
+        it('should map cabin preconditioning request correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'CABIN PRECONDITIONING REQUEST',
+                value: 'ACTION',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('cabin_preconditioning_request'));
+        });
+
+        it('should map high voltage battery preconditioning status correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'HIGH VOLTAGE BATTERY PRECONDITIONING STATUS',
+                value: 'ENABLED',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+            assert.ok(result.value_template.includes('high_voltage_battery_preconditioning_status'));
+        });
+
+        it('should map binary sensor config for edge cases', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'EXHST PART FLTR WARN ON',
+                value: 'TRUE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+        });
+
+        it('should map EXHST PART FLTR WARN2 ON correctly', () => {
+            const diagnostic = new Diagnostic({});
+            const element = {
+                name: 'EXHST PART FLTR WARN2 ON',
+                value: 'TRUE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(diagnostic, element);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.device_class, undefined);
+        });
+    });
+
+    describe('base configuration payload', () => {
+        let mqtt;
+        let diagnostic;
+        let vehicle;
+
+        beforeEach(() => {
+            vehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
+            mqtt = new MQTT(vehicle);
+            diagnostic = new Diagnostic({});
+        });
+
+        it('should create base payload with default values', () => {
+            const element = {
+                name: 'TEST SENSOR',
+                value: '123',
+                unit: 'units'
+            };
+
+            const result = mqtt.mapBaseConfigPayload(diagnostic, element);
+            assert.ok(result.unique_id);
+            assert.ok(result.state_topic);
+            assert.ok(result.value_template);
+            assert.deepStrictEqual(result.device, {
+                identifiers: ['XXX'],
+                manufacturer: 'foo',
+                model: '2020 bar',
+                name: '2020 foo bar',
+                suggested_area: '2020 foo bar Sensors'
+            });
+        });
+
+        it('should handle null diagnostic elements in base payload', () => {
+            const element = {
+                name: undefined,
+                value: null,
+                unit: null
+            };
+
+            const result = mqtt.mapBaseConfigPayload(diagnostic, element);
+            assert.ok(result.unique_id.includes('undefined'));
+            assert.strictEqual(result.value_template, '{{ value_json. }}');
+        });
+    });
+
+    describe('sensor message configuration payload', () => {
+        let mqtt;
+        let vehicle;
+
+        beforeEach(() => {
+            vehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
+            mqtt = new MQTT(vehicle);
+        });
+
+        it('should handle undefined component in sensor message config', () => {
+            const result = mqtt.createSensorMessageConfigPayload('test_sensor', undefined, 'icon');
+            assert.ok(result.topic.includes('test_sensor_message'));
+            assert.ok(result.payload.unique_id.includes('test_sensor_message'));
+        });
+
+        it('should handle missing icon in sensor message config', () => {
+            const result = mqtt.createSensorMessageConfigPayload('test_sensor', 'component', undefined);
+            assert.strictEqual(result.payload.icon, undefined);
         });
     });
 });
