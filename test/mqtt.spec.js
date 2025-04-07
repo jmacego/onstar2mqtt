@@ -1847,6 +1847,61 @@ describe('MQTT', () => {
             assert.strictEqual(result.state_class, 'measurement');
             assert.strictEqual(result.device_class, undefined);
         });
+
+        it('should handle "NA" unit values by converting them to undefined', () => {
+            const diagEl = {
+                name: 'EXHST FL LEVL WARN STATUS',
+                value: 'Green',
+                unit: 'NA'
+            };
+            const result = mqtt.mapSensorConfigPayload(d, diagEl, 'measurement');
+            assert.strictEqual(result.unit_of_measurement, undefined);
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should handle lowercase "na" unit values by converting them to undefined', () => {
+            const diagEl = {
+                name: 'TEST_SENSOR',
+                value: 'Red',
+                unit: 'na'
+            };
+            const result = mqtt.mapSensorConfigPayload(d, diagEl, 'measurement');
+            assert.strictEqual(result.unit_of_measurement, undefined);
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should handle lowercase "nA" unit values by converting them to undefined', () => {
+            const diagEl = {
+                name: 'TEST_SENSOR',
+                value: 'Yellow',
+                unit: 'nA'
+            };
+            const result = mqtt.mapSensorConfigPayload(d, diagEl, 'measurement');
+            assert.strictEqual(result.unit_of_measurement, undefined);
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should handle lowercase "Na" unit values by converting them to undefined', () => {
+            const diagEl = {
+                name: 'TEST_SENSOR',
+                value: 'Orange',
+                unit: 'Na'
+            };
+            const result = mqtt.mapSensorConfigPayload(d, diagEl, 'measurement');
+            assert.strictEqual(result.unit_of_measurement, undefined);
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should preserve valid unit values in mapSensorConfigPayload', () => {
+            const diagEl = {
+                name: 'TEST_SENSOR',
+                value: '123',
+                unit: 'kPa'
+            };
+            const result = mqtt.mapSensorConfigPayload(d, diagEl, 'measurement');
+            assert.strictEqual(result.unit_of_measurement, 'kPa');
+            assert.strictEqual(result.state_class, 'measurement');
+        });
     });
 
     describe('constructor initialization', () => {
