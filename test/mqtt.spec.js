@@ -34,6 +34,7 @@ describe('MQTT', () => {
         assert.strictEqual(MQTT.determineSensorType('PRIORITY CHARGE INDICATOR'), 'binary_sensor');
         assert.strictEqual(MQTT.determineSensorType('PRIORITY CHARGE STATUS'), 'binary_sensor');
         assert.strictEqual(MQTT.determineSensorType('getLocation'), 'device_tracker');
+        assert.strictEqual(MQTT.determineSensorType('EXHST FL LEVL WARN STATUS'), 'sensor');
         assert.strictEqual(MQTT.determineSensorType('foo'), 'sensor');
         assert.strictEqual(MQTT.determineSensorType(''), 'sensor');
     });
