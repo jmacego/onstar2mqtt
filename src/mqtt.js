@@ -767,8 +767,8 @@ class MQTT {
 
     mapSensorConfigPayload(diag, diagEl, state_class, device_class, name, attr) {
         name = name || MQTT.convertFriendlyName(diagEl.name);
-        // Ignore units that are "NA"
-        const unit = diagEl.unit && diagEl.unit.toUpperCase() === 'NA' ? undefined : diagEl.unit;
+        // Ignore units that are "NA" or "XXX"
+        const unit = diagEl.unit && !['NA', 'XXX'].includes(diagEl.unit.toUpperCase()) ? diagEl.unit : undefined;
         return _.extend(
             this.mapBaseConfigPayload(diag, diagEl, state_class, device_class, name, attr),
             { unit_of_measurement: unit });

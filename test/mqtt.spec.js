@@ -1928,6 +1928,18 @@ describe('MQTT', () => {
             assert.strictEqual(result.unit_of_measurement, 'kPa');
             assert.strictEqual(result.state_class, 'measurement');
         });
+
+        it('should handle XXX unit values by converting them to undefined', () => {
+            const d = new Diagnostic({});
+            const diagEl = {
+                name: 'TEST_SENSOR',
+                value: '123',
+                unit: 'XXX'
+            };
+            const result = mqtt.mapSensorConfigPayload(d, diagEl, 'measurement');
+            assert.strictEqual(result.unit_of_measurement, undefined);
+            assert.strictEqual(result.state_class, 'measurement');
+        });
     });
 
     describe('constructor initialization', () => {
