@@ -1750,6 +1750,32 @@ describe('MQTT', () => {
             assert.strictEqual(result.state_class, 'measurement');
         });
 
+        it('should map sensor config payload for PROJECTED EV RANGE GENERAL AWAY TARGET CHARGE SET', () => {
+            const diagEl = {
+                name: 'PROJECTED EV RANGE GENERAL AWAY TARGET CHARGE SET',
+                value: '597.984',
+                unit: 'km'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.device_class, 'distance');
+            assert.strictEqual(result.state_class, 'measurement');
+            assert.ok(result.value_template.includes('projected_ev_range_general_away_target_charge_set'));
+            assert.strictEqual(result.unit_of_measurement, 'km');
+        });
+
+        it('should map sensor config payload for PROJECTED EV RANGE GENERAL AWAY TARGET CHARGE SET MI', () => {
+            const diagEl = {
+                name: 'PROJECTED EV RANGE GENERAL AWAY TARGET CHARGE SET MI',
+                value: '371.6',
+                unit: 'mi'
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.device_class, 'distance');
+            assert.strictEqual(result.state_class, 'measurement');
+            assert.ok(result.value_template.includes('projected_ev_range_general_away_target_charge_set_mi'));
+            assert.strictEqual(result.unit_of_measurement, 'mi');
+        });
+
         it('should map sensor config payload for charger power level', () => {
             const diagEl = {
                 name: 'CHARGER POWER LEVEL',
@@ -1900,6 +1926,18 @@ describe('MQTT', () => {
             };
             const result = mqtt.mapSensorConfigPayload(d, diagEl, 'measurement');
             assert.strictEqual(result.unit_of_measurement, 'kPa');
+            assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should handle XXX unit values by converting them to undefined', () => {
+            const d = new Diagnostic({});
+            const diagEl = {
+                name: 'TEST_SENSOR',
+                value: '123',
+                unit: 'XXX'
+            };
+            const result = mqtt.mapSensorConfigPayload(d, diagEl, 'measurement');
+            assert.strictEqual(result.unit_of_measurement, undefined);
             assert.strictEqual(result.state_class, 'measurement');
         });
     });
