@@ -858,6 +858,8 @@ class MQTT {
             case 'EV RANGE MI':
             case 'LAST TRIP TOTAL DISTANCE':
             case 'LAST TRIP TOTAL DISTANCE MI':
+            case 'PROJECTED EV RANGE GENERAL AWAY TARGET CHARGE SET':
+            case 'PROJECTED EV RANGE GENERAL AWAY TARGET CHARGE SET MI':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'distance');
             case 'ODOMETER':
             case 'ODOMETER MI':
