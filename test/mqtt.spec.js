@@ -1718,8 +1718,8 @@ describe('MQTT', () => {
             const diagnostic = new Diagnostic({
                 name: 'TEST',
                 diagnosticElements: [
-                    {name: 'UNKNOWN_BOOL', value: 'INVALID', unit: null},
-                    {name: 'UNKNOWN_NUM', value: 'NOT_A_NUMBER', unit: 'units'}
+                    { name: 'UNKNOWN_BOOL', value: 'INVALID', unit: null },
+                    { name: 'UNKNOWN_NUM', value: 'NOT_A_NUMBER', unit: 'units' }
                 ]
             });
             const result = mqtt.getStatePayload(diagnostic);
@@ -1727,6 +1727,241 @@ describe('MQTT', () => {
             // Update this line to expect undefined since unknown values are not handled
             assert.strictEqual(result.unknown_bool, undefined);
         });
+
+        describe('getStatePayload binary sensor value handling', () => {
+            let diagnostic;
+
+            beforeEach(() => {
+                diagnostic = new Diagnostic({ name: 'TEST' });
+            });
+
+            it('should handle EV PLUG STATE correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'EV PLUG STATE', value: 'plugged', message: 'plugged', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.ev_plug_state, true);
+                assert.strictEqual(result.ev_plug_state_message, 'plugged');
+
+                diagnostic.diagnosticElements = [
+                    { name: 'EV PLUG STATE', value: 'unplugged', message: 'unplugged', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.ev_plug_state, false);
+            });
+
+            it('should handle EV CHARGE STATE correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'EV CHARGE STATE', value: 'charging', message: 'charging', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.ev_charge_state, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'EV CHARGE STATE', value: 'not_charging', message: 'not_charging', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.ev_charge_state, false);
+            });
+
+            it('should handle PRIORITY CHARGE INDICATOR correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'PRIORITY CHARGE INDICATOR', value: 'TRUE', message: 'na', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.priority_charge_indicator, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'PRIORITY CHARGE INDICATOR', value: 'FALSE', message: 'na', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.priority_charge_indicator, false);
+            });
+
+            it('should handle PRIORITY CHARGE STATUS correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'PRIORITY CHARGE STATUS', value: 'ACTIVE', message: 'na', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.priority_charge_status, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'PRIORITY CHARGE STATUS', value: 'NOT_ACTIVE', message: 'na', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.priority_charge_status, false);
+            });
+
+            it('should handle LOC BASED CHARGING HOME LOC STORED correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'LOC BASED CHARGING HOME LOC STORED', value: 'TRUE', message: 'na', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.loc_based_charging_home_loc_stored, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'LOC BASED CHARGING HOME LOC STORED', value: 'FALSE', message: 'na', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.loc_based_charging_home_loc_stored, false);
+            });
+
+            it('should handle SCHEDULED CABIN PRECONDTION CUSTOM SET REQ ACTIVE correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'SCHEDULED CABIN PRECONDTION CUSTOM SET REQ ACTIVE', value: 'TRUE', message: 'na', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.scheduled_cabin_precondtion_custom_set_req_active, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'SCHEDULED CABIN PRECONDTION CUSTOM SET REQ ACTIVE', value: 'FALSE', message: 'na', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.scheduled_cabin_precondtion_custom_set_req_active, false);
+            });
+
+            it('should handle VEH IN HOME LOCATION correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'VEH IN HOME LOCATION', value: 'TRUE', message: 'na', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.veh_in_home_location, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'VEH IN HOME LOCATION', value: 'FALSE', message: 'na', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.veh_in_home_location, false);
+            });
+
+            it('should handle VEH NOT IN HOME LOC correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'VEH NOT IN HOME LOC', value: 'TRUE', message: 'na', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.veh_not_in_home_loc, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'VEH NOT IN HOME LOC', value: 'FALSE', message: 'na', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.veh_not_in_home_loc, false);
+            });
+
+            it('should handle VEH LOCATION STATUS INVALID correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'VEH LOCATION STATUS INVALID', value: 'TRUE', message: 'na', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.veh_location_status_invalid, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'VEH LOCATION STATUS INVALID', value: 'FALSE', message: 'na', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.veh_location_status_invalid, false);
+            });
+
+            it('should handle CABIN PRECOND REQUEST correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'CABIN PRECOND REQUEST', value: 'ON', message: 'on', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.cabin_precond_request, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'CABIN PRECOND REQUEST', value: 'OFF', message: 'off', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.cabin_precond_request, false);
+            });
+
+            it('should handle PREF CHARGING TIMES SETTING correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'PREF CHARGING TIMES SETTING', value: 'ON', message: 'on', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.pref_charging_times_setting, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'PREF CHARGING TIMES SETTING', value: 'OFF', message: 'off', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.pref_charging_times_setting, false);
+            });
+
+            it('should handle LOCATION BASE CHARGE SETTING correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'LOCATION BASE CHARGE SETTING', value: 'ON', message: 'on', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.location_base_charge_setting, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'LOCATION BASE CHARGE SETTING', value: 'OFF', message: 'off', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.location_base_charge_setting, false);
+            });
+
+            it('should handle CABIN PRECONDITIONING REQUEST correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'CABIN PRECONDITIONING REQUEST', value: 'ACTION', message: 'action', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.cabin_preconditioning_request, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'CABIN PRECONDITIONING REQUEST', value: 'NO_ACTION', message: 'no_action', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.cabin_preconditioning_request, false);
+            });
+
+            it('should handle HIGH VOLTAGE BATTERY PRECONDITIONING STATUS correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'HIGH VOLTAGE BATTERY PRECONDITIONING STATUS', value: 'ENABLED', message: 'enabled', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.high_voltage_battery_preconditioning_status, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'HIGH VOLTAGE BATTERY PRECONDITIONING STATUS', value: 'DISABLED', message: 'disabled', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.high_voltage_battery_preconditioning_status, false);
+            });
+
+            it('should handle EXHST PART FLTR WARN ON correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'EXHST PART FLTR WARN ON', value: 'TRUE', message: 'na', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.exhst_part_fltr_warn_on, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'EXHST PART FLTR WARN ON', value: 'FALSE', message: 'na', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.exhst_part_fltr_warn_on, false);
+            });
+
+            it('should handle EXHST PART FLTR WARN2 ON correctly', () => {
+                diagnostic.diagnosticElements = [
+                    { name: 'EXHST PART FLTR WARN2 ON', value: 'TRUE', message: 'na', unit: null }
+                ];
+                const result = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result.exhst_part_fltr_warn2_on, true);
+
+                diagnostic.diagnosticElements = [
+                    { name: 'EXHST PART FLTR WARN2 ON', value: 'FALSE', message: 'na', unit: null }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.exhst_part_fltr_warn2_on, false);
+            });
+        });
+
+
     });
 
     describe('mapping functions', () => {
@@ -1948,7 +2183,7 @@ describe('MQTT', () => {
             const testPrefix = 'testPrefix';
             const testNamePrefix = 'testName';
             const mqtt = new MQTT(testVehicle, testPrefix, testNamePrefix);
-            
+
             assert.strictEqual(mqtt.prefix, testPrefix);
             assert.strictEqual(mqtt.vehicle, testVehicle);
             assert.strictEqual(mqtt.instance, testVehicle.vin);
