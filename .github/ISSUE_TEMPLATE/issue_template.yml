@@ -1,6 +1,5 @@
 name: Submit an Issue
-description: Open an issue to report a bug or request a feature. 
-NOTE: This repo is for users who use the standalone Docker container version of onstar2mqtt. If you are using the Home Assistant add-on version, please submit your issue at: https://github.com/BigThunderSR/homeassistant-addons-onstar2mqtt
+description: Open an issue to report a bug or request a feature. NOTE: This repo is for users who use the standalone Docker container version of onstar2mqtt. If you are using the Home Assistant add-on version, please submit your issue at: https://github.com/BigThunderSR/homeassistant-addons-onstar2mqtt
 title: "[Issue]: <Please replace with a clear and concise title>"
 
 body:
