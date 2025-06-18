@@ -221,3 +221,7 @@ Publish the release on GitHub to trigger a release build (i.e. update 'latest' d
 ## My other related project which provides additional capabilities through Node-RED
 
 [https://github.com/BigThunderSR/node-red-contrib-onstar2](https://github.com/BigThunderSR/node-red-contrib-onstar2)
+
+
+[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
+[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
