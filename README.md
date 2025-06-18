@@ -1,7 +1,7 @@
-# onstar2mqtt ![Dynamic YAML Badge](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FBigThunderSR%2Fonstar2mqtt%2Frefs%2Fheads%2Fmain%2Fpackage.json&query=%24.version&label=Ver)
-
+# onstar2mqtt ![Dynamic YAML Badge](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FBigThunderSR%2Fonstar2mqtt%2Frefs%2Fheads%2Fmain%2Fpackage.json&query=%24.version&label=Ver) 
 ![Supports aarch64 Architecture][aarch64-shield]
 ![Supports amd64 Architecture][amd64-shield]
+
 ![No Support for armhf Architecture][armhf-shield]
 ![No Support for armv7 Architecture][armv7-shield]
 ![No Support for i386 Architecture][i386-shield]
