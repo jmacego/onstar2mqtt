@@ -2,6 +2,9 @@
 
 ![Supports aarch64 Architecture][aarch64-shield]
 ![Supports amd64 Architecture][amd64-shield]
+![No Support for armhf Architecture][armhf-shield]
+![No Support for armv7 Architecture][armv7-shield]
+![No Support for i386 Architecture][i386-shield]
 
 [![ci](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/ci.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/codeql-analysis.yml)
