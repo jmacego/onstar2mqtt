@@ -41,6 +41,7 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 
 MQTT auto discovery is enabled. For further integrations and screenshots see [HA-MQTT.md](HA-MQTT.md).
 
+### Feature Updates of Note
 - **NEW - Ability to dynamically change polling frequency using MQTT**
 
   - Uses the value from `ONSTAR_REFRESH` on initial startup
@@ -118,7 +119,7 @@ docker run \
   --env ONSTAR_PASSWORD= \
   --env ONSTAR_TOTP= \
   --env ONSTAR_PIN= \
-  --env TOKEN_LOCATION \ ## NOTE: This is optional and allows you to save/read tokens from persistent storage
+  --env TOKEN_LOCATION \ ## NOTE: Optional, but STRONGLY RECOMMENDED and allows you to save/read tokens from persistent storage
   --env MQTT_HOST= \
   --env MQTT_USERNAME \
   --env MQTT_PASSWORD \
@@ -136,7 +137,7 @@ docker run \
   --env ONSTAR_PASSWORD= \
   --env ONSTAR_TOTP= \
   --env ONSTAR_PIN= \
-  --env TOKEN_LOCATION \ ## NOTE: This is optional and allows you to save/read tokens from persistent storage
+  --env TOKEN_LOCATION \ ## NOTE: Optional, but STRONGLY RECOMMENDED and allows you to save/read tokens from persistent storage
   --env MQTT_HOST= \
   --env MQTT_USERNAME \
   --env MQTT_PASSWORD \
