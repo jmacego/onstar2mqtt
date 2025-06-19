@@ -37,6 +37,10 @@ Collect the following information:
 
 Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with `ONSTAR_REFRESH` with values in milliseconds.
 
+### Home Assistant configuration templates
+
+MQTT auto discovery is enabled. For further integrations and screenshots see [HA-MQTT.md](HA-MQTT.md).
+
 - **NEW - Ability to dynamically change polling frequency using MQTT**
 
   - Uses the value from `ONSTAR_REFRESH` on initial startup
@@ -190,10 +194,6 @@ MQTT_ONSTAR_POLLING_STATUS_TOPIC=
 
 It's a typical node.js application, define the same environment values as described in the docker sections and run with:
 `npm run start`. Currently, this is tested with Node.js 18.x, 20.x and 22.x.
-
-### Home Assistant configuration templates
-
-MQTT auto discovery is enabled. For further integrations and screenshots see [HA-MQTT.md](HA-MQTT.md).
 
 ## Development
 
