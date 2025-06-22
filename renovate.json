@@ -3,7 +3,6 @@
     "extends": [
         "config:recommended"
     ],
-    "prTitle": "Update dependency {{depName}} from {{currentVersion}} to {{newVersion}}",
     "npm": {
         "minimumReleaseAge": "3 days",
         "rangeStrategy": "bump"
