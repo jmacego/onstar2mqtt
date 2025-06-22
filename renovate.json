@@ -3,7 +3,7 @@
     "extends": [
         "config:recommended"
     ],
-    "prTitle": "chore(deps): update {{depName}} from {{currentVersion}} to {{newVersion}}",
+    "prTitle": "Update dependency {{depName}} from {{currentVersion}} to {{newVersion}}",
     "npm": {
         "minimumReleaseAge": "3 days",
         "rangeStrategy": "bump"
