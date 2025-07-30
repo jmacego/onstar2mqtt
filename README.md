@@ -42,6 +42,7 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 MQTT auto discovery is enabled. For further integrations and screenshots see [HA-MQTT.md](HA-MQTT.md).
 
 ### Feature Updates of Note
+
 - **NEW - Ability to dynamically change polling frequency using MQTT**
 
   - Uses the value from `ONSTAR_REFRESH` on initial startup
@@ -223,7 +224,6 @@ Publish the release on GitHub to trigger a release build (i.e. update 'latest' d
 ## My other related project which provides additional capabilities through Node-RED
 
 [https://github.com/BigThunderSR/node-red-contrib-onstar2](https://github.com/BigThunderSR/node-red-contrib-onstar2)
-
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
