@@ -20,11 +20,11 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 
 ## Running
 
-Collect the following information:
+Collect the following minimum information:
 
 1. [Generate](https://www.uuidgenerator.net/version4) a v4 uuid for the device ID
 1. OnStar login: username, password, PIN, [TOTP Key (Please click link for instructions)](https://github.com/BigThunderSR/OnStarJS?tab=readme-ov-file#new-requirement-as-of-2024-11-19)
-1. Your car's VIN. Easily found in the monthly OnStar diagnostic emails.
+1. Your vehicle's VIN which is easily found in the monthly OnStar diagnostic emails, in your OnStar account or in the official OnStar apps
 1. MQTT server information: hostname, username, password
    1. If using TLS, define `MQTT_PORT` and `MQTT_TLS="true"`
    1. **NEW! - Provide MQTT topic (`MQTT_ONSTAR_POLLING_STATUS_TOPIC`) for Onstar Data Polling Status to monitor success/failure when OnStar is polled for data**
